@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Yiran Geng&apos;s Blog</title>
+    <description></description>
+    <link>http://localhost:4000/blogs/</link>
+    <atom:link href="http://localhost:4000/blogs/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Fri, 22 Mar 2024 14:27:35 +0800</pubDate>
+    <lastBuildDate>Fri, 22 Mar 2024 14:27:35 +0800</lastBuildDate>
+    <generator>Jekyll v4.3.3</generator>
+    
+      <item>
+        <title>Reinforcement Learning From Scratch</title>
+        <description>&lt;style&gt;
+.post-header h1 {
+    font-size: 35px;
+}
+.post pre,
+.post code {
+    background-color: #fcfcfc;
+    font-size: 13px; /* make code smaller for this post... */
+}
+&lt;/style&gt;
+
+&lt;h3 id=&quot;overview&quot;&gt;Overview&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Books
+    &lt;ul&gt;
+      &lt;li&gt;Theory of Deep Learning&lt;/li&gt;
+      &lt;li&gt;RL: an Introduction (Sutton)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Open source code (strongly recommend!)
+    &lt;ul&gt;
+      &lt;li&gt;动手学深度学习 https://zh.d2l.ai/&lt;/li&gt;
+      &lt;li&gt;动手学强化学习 HRL https://hrl.boyuai.com/&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;create conda environment&lt;/li&gt;
+  &lt;li&gt;pip install packages&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;rl-an-introduction-sutton&quot;&gt;RL: an Introduction (Sutton)&lt;/h3&gt;
+
+&lt;p&gt;Reference materials below do not need to be read in full! They are to serve your learning, not to add extra pressure~&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Free Online Book
+    &lt;ul&gt;
+      &lt;li&gt;http://incompleteideas.net/book/RLbook2020.pdf&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Official Slides
+    &lt;ul&gt;
+      &lt;li&gt;https://drive.google.com/drive/folders/1cMJWR90IkMxWngWpjOtD-qdLS_a7KiYL&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Exercise Solutions
+    &lt;ul&gt;
+      &lt;li&gt;Send in your solutions for a chapter, get the official ones back @richsutton.com&lt;/li&gt;
+      &lt;li&gt;https://github.com/LyWangPX/Reinforcement-Learning-2nd-Edition-by-Sutton-Exercise-Solutions&lt;/li&gt;
+      &lt;li&gt;https://github.com/brynhayder/reinforcement_learning_an_introduction/tree/master/exercises&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Notes
+    &lt;ul&gt;
+      &lt;li&gt;https://github.com/brynhayder/reinforcement_learning_an_introduction/blob/master/notes/notes.pdf&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Demo
+    &lt;ul&gt;
+      &lt;li&gt;https://cs.stanford.edu/people/karpathy/reinforcejs/index.html&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Code
+    &lt;ul&gt;
+      &lt;li&gt;Official Code in C and Lisp http://incompleteideas.net/book/code/code2nd.html&lt;/li&gt;
+      &lt;li&gt;Hands-on Reinforcement Learning https://hrl.boyuai.com/&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Courses
+    &lt;ul&gt;
+      &lt;li&gt;https://www.davidsilver.uk/teaching/&lt;/li&gt;
+      &lt;li&gt;https://web.stanford.edu/class/cs234/modules.html&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Key points
+    &lt;ul&gt;
+      &lt;li&gt;Q learning
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;https://www.davidsilver.uk/wp-content/uploads/2020/03/control.pdf&quot;&gt;https://www.davidsilver.uk/wp-content/uploads/2020/03/control.pdf&lt;/a&gt; p35&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;https://stats.stackexchange.com/questions/184657/what-is-the-difference-between-off-policy-and-on-policy-learning&quot;&gt;https://stats.stackexchange.com/questions/184657/what-is-the-difference-between-off-policy-and-on-policy-learning&lt;/a&gt;
+            &lt;ul&gt;
+              &lt;li&gt;The reason that Q-learning is off-policy is that it updates its Q-values using the Q-value of the next state 𝑠’ and the &lt;em&gt;greedy action&lt;/em&gt; 𝑎’. In other words, it estimates the &lt;em&gt;return&lt;/em&gt; (total discounted future reward) for state-action pairs assuming a greedy policy were followed despite the fact that it’s not following a greedy policy.&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Relationship Between DP and TD
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;https://www.davidsilver.uk/wp-content/uploads/2020/03/control.pdf&quot;&gt;https://www.davidsilver.uk/wp-content/uploads/2020/03/control.pdf&lt;/a&gt; p41&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;How is TD derived? Relationship between TD and DP, MC&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;playing-atari-with-dqn&quot;&gt;Playing Atari with DQN&lt;/h3&gt;
+
+&lt;p&gt;(Part A and B can be done in reverse order.)&lt;/p&gt;
+
+&lt;h4 id=&quot;part-a-algorithm-implementation&quot;&gt;Part A: Algorithm Implementation&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Based on pseudocode from Sutton, implement Policy Iteration (including Policy Evaluation and Policy Improvement), Value Iteration, Sarsa, n-step Sarsa, and Q-learning algorithms.&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;If implementing feels a bit challenging, focus on the core and skip less critical parts.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Read Chapter 4 (DP) and Chapter 5 (TD) of &lt;a href=&quot;https://hrl.boyuai.com/&quot;&gt;HRL&lt;/a&gt; and compare the code you write with reference code.&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;In addition to correctness of code logic, you can also pay attention to how the reference code encapsulates functions, classes, and names variables.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;part-b-getting-familiar-with-environment&quot;&gt;Part B: Getting familiar with Environment&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Run the reference code of HRL in provided Cliff Walking and Frozen Lake environments. Remember to execute the provided print functions and visualization tools to intuitively understand the interaction between policies and environments. Feel free to tweak the code and experiment with it as you like.
+    &lt;ul&gt;
+      &lt;li&gt;Compare &lt;a href=&quot;https://hrl.boyuai.com/chapter/1/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95#42-%E6%82%AC%E5%B4%96%E6%BC%AB%E6%AD%A5%E7%8E%AF%E5%A2%83&quot;&gt;HRL’s implementation of Cliff Walking environment&lt;/a&gt; with &lt;a href=&quot;https://github.com/openai/gym/blob/master/gym/envs/toy_text/cliffwalking.py&quot;&gt;Openai Gym’s version&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Explain this line: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;P[i * self.ncol + j][a] = [(1, i * self.ncol + j, 0, True)]&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;Why is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;P&lt;/code&gt; unnecessary for TD policies?&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Read &lt;a href=&quot;https://hrl.boyuai.com/chapter/1/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95#45-%E5%86%B0%E6%B9%96%E7%8E%AF%E5%A2%83&quot;&gt;Frozen Lake environment&lt;/a&gt;, make sure you read through the &lt;a href=&quot;https://github.com/openai/gym/blob/master/gym/envs/toy_text/frozen_lake.py&quot;&gt;original Openai Gym’s code&lt;/a&gt; and &lt;a href=&quot;https://gymnasium.farama.org/environments/toy_text/frozen_lake/&quot;&gt;document&lt;/a&gt;, and understand how Dynamic Programming policies you implemented interact with Frozen Lake Env.
+        &lt;ul&gt;
+          &lt;li&gt;How to create a default map of size 8x8?&lt;/li&gt;
+          &lt;li&gt;What would be the result of  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;print(env.P[6])&lt;/code&gt;(for map size 4x4)? Read the code and think yourself, and then run a check.&lt;/li&gt;
+          &lt;li&gt;What would be the result of  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;print(env.P[15])&lt;/code&gt;(for map size 4x4)? What makes the difference? (refer to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;frozen_lake.py&lt;/code&gt;)&lt;/li&gt;
+          &lt;li&gt;Is the default environment set to be slippery or not? How to explicitly set it?&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Write a simplest environment and embed it into PPO (or any algorithm) in Stable Baselines 3
+    &lt;ul&gt;
+      &lt;li&gt;References you might find helpful:
+        &lt;ol&gt;
+          &lt;li&gt;Example code of PPO in this &lt;a href=&quot;https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html#example&quot;&gt;link&lt;/a&gt;.&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;custom_gym_env.ipynb&lt;/code&gt; in this &lt;a href=&quot;https://colab.research.google.com/github/araffin/rl-tutorial-jnrr19/blob/sb3/5_custom_gym_env.ipynb&quot;&gt;link&lt;/a&gt;.&lt;/li&gt;
+          &lt;li&gt;Using Custom Environments in this &lt;a href=&quot;https://stable-baselines3.readthedocs.io/en/master/guide/custom_env.html&quot;&gt;link&lt;/a&gt;.&lt;/li&gt;
+          &lt;li&gt;Vectorized Environments in this &lt;a href=&quot;https://stable-baselines3.readthedocs.io/en/master/guide/vec_envs.html&quot;&gt;link&lt;/a&gt;.&lt;/li&gt;
+          &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stable_baselines3.common.vec_env&lt;/code&gt; &amp;amp; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stable_baselines3.common.envs&lt;/code&gt;&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Run arbitrary OpenAI Gym’s classic environment using Stable Baselines 3 or any algorithm (DP, TD, etc).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;part-c-dqn&quot;&gt;Part C: DQN&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Paper
+    &lt;ul&gt;
+      &lt;li&gt;Human-level control through deep reinforcement learning&lt;/li&gt;
+      &lt;li&gt;Playing atari with deep reinforcement learning&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Video Demo
+    &lt;ul&gt;
+      &lt;li&gt;Google DeepMind’s Deep Q-learning playing Atari Breakout! [&lt;a href=&quot;https://www.youtube.com/watch?v=V1eYniJ0Rnk&quot;&gt;link&lt;/a&gt;]&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;PyTorch Tutorial [&lt;a href=&quot;https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html&quot;&gt;link&lt;/a&gt;]&lt;/li&gt;
+  &lt;li&gt;CS285 hw3: 2 Deep Q-Learning
+    &lt;ul&gt;
+      &lt;li&gt;Handout in this &lt;a href=&quot;https://rail.eecs.berkeley.edu/deeprlcourse/deeprlcourse/static/homeworks/hw3.pdf&quot;&gt;link&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;Code in this &lt;a href=&quot;https://github.com/berkeleydeeprlcourse/homework_fall2023/tree/main/hw3&quot;&gt;link&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;part-d-atari&quot;&gt;Part D: Atari&lt;/h4&gt;
+
+&lt;p&gt;Finally&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Implement DQN algorithm using Atari environment in OpenAI Gym.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Not yet finished&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Be wary of non-breaking bugs, &lt;a href=&quot;https://openai.com/research/openai-baselines-dqn&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 21 Mar 2024 22:00:00 +0800</pubDate>
+        <link>http://localhost:4000/blogs/2024/03/21/rl_scratch/</link>
+        <guid isPermaLink="true">http://localhost:4000/blogs/2024/03/21/rl_scratch/</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

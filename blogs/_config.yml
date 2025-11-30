@@ -1,0 +1,18 @@
+# Site settings
+title: Yiran Geng's Blog
+email: 
+description: ""
+baseurl: "/blogs"
+url: https://gengyiran.github.io
+twitter_username: geng_yiran
+github_username:  GengYiran
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+highlighter: rouge
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge

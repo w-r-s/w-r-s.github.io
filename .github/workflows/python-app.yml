@@ -1,25 +1,36 @@
 name: Get Citation and Stars Data
 
 on: 
- page_build: 
- schedule:
-  - cron:  '0 6 * * 1'
+  page_build:
+  schedule:
+    - cron: '0 6 * * 1'  # 每周一 06:00
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Install Reqs
+    - name: Checkout latest code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        clean: true
+
+    - name: Install dependencies
       run: |
-        sudo apt-get install python3-setuptools
-    - name: Run
+        sudo apt-get update
+        sudo apt-get install -y python3-setuptools
+        pip3 install -r ./assets/requirements.txt
+
+    - name: Run script
       run: |
         cd ./assets
-        pip3 install -r requirements.txt
         python3 get_scholar_github.py
-        git add "./assets/"
+
+    - name: Commit and Push changes
+      run: |
+        git add ./assets
         git config --global user.email "wrs6@88.com"
         git config --global user.name "w-r-s"
-        git commit -m "* update `date '+%Y-%m-%d %H:%M:%S'`"
+        git commit -m "* update $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
         git push

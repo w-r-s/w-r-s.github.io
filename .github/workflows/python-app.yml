@@ -1,0 +1,25 @@
+name: Get Citation and Stars Data
+
+on: 
+ page_build: 
+ schedule:
+  - cron:  '0 6 * * 1'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Reqs
+      run: |
+        sudo apt-get install python3-setuptools
+    - name: Run
+      run: |
+        cd ./assets
+        pip3 install -r requirements.txt
+        python3 get_scholar_github.py
+        git add "./assets/"
+        git config --global user.email "wrs6@88.com"
+        git config --global user.name "w-r-s"
+        git commit -m "* update `date '+%Y-%m-%d %H:%M:%S'`"
+        git push

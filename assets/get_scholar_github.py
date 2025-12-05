@@ -6,18 +6,22 @@ import os
 import requests
 
 def get_scholar():
-    author: dict = scholarly.search_author_id("SSaBaioAAAAJ")
-    scholarly.fill(author, sections=['basics', 'indices', 'counts', 'publications'])
-    name = author['name']
+    try:
+        author = scholarly.search_author_id("SSaBaioAAAAJ")
+        scholarly.fill(author, sections=['basics', 'indices', 'counts', 'publications'])
+    except Exception as e:
+        print("Google Scholar 请求失败，已跳过:", e)
+        return  # 🔥失败就直接跳过，不卡死
+
     author['updated'] = str(datetime.now())
-    author['publications'] = {v['author_pub_id']:v for v in author['publications']}
+    author['publications'] = {v['author_pub_id']: v for v in author['publications']}
 
     shieldio_data = {
-    "schemaVersion": 1,
-    "label": "citations",
-    "message": f"{author['citedby']}",
+        "schemaVersion": 1,
+        "label": "citations",
+        "message": f"{author['citedby']}",
     }
-    with open(f'./assets/gs_data_shieldsio.json', 'w') as outfile:
+    with open('./assets/gs_data_shieldsio.json', 'w') as outfile:
         json.dump(shieldio_data, outfile, ensure_ascii=False)
 
 def get_repo_stars(repo_full_name):

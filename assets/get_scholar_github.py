@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 import os
 import requests
+
 def get_scholar():
     author: dict = scholarly.search_author_id("SSaBaioAAAAJ")
     scholarly.fill(author, sections=['basics', 'indices', 'counts', 'publications'])
@@ -18,6 +19,7 @@ def get_scholar():
     }
     with open(f'./assets/gs_data_shieldsio.json', 'w') as outfile:
         json.dump(shieldio_data, outfile, ensure_ascii=False)
+
 def get_repo_stars(repo_full_name):
     """
     repo_full_name: 字符串，例如 'torvalds/linux'
@@ -63,5 +65,5 @@ repos = [
         "FreedomIntelligence/Awesome-AI4Med",
     ]
 
-get_repo_stars()
+get_scholar()
 get_github(repos)

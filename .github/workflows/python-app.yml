@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      SCRAPER_API_KEY: ${{ secrets.SCRAPER_API_KEY }}
+
     steps:
     - name: Checkout latest code
       uses: actions/checkout@v4
@@ -24,8 +27,8 @@ jobs:
 
     - name: Run script
       run: |
-        cd ./assets
-        python3 get_scholar_github.py
+        # 建议这里改成不 cd，而是直接指定脚本路径
+        python3 ./assets/get_scholar_github.py
 
     - name: Commit and Push changes
       run: |

@@ -1,74 +1,67 @@
-from scholarly import scholarly, ProxyGenerator
+from scholarly import scholarly
 import json
 from datetime import datetime
 import os
 import requests
+import signal
 
-# =======================
-#  初始化 Google Scholar 代理
-# =======================
-def setup_scholar_proxy():
-    """使用 ScraperAPI 配置代理（最稳定方式：SingleProxy 自定义 URL）"""
-    api_key = os.environ.get("SCRAPER_API_KEY")
-    if not api_key:
-        print("SCRAPER_API_KEY 未设置，跳过 Google Scholar 抓取")
-        return False
+# =====================================================
+#  全局超时控制（用于限制整个 scholarly 流程最多 60 秒）
+# =====================================================
+class TimeoutException(Exception):
+    pass
 
-    pg = ProxyGenerator()
-
-    # ScraperAPI 官方代理格式
-    proxy_url = f"http://scraperapi:{api_key}@proxy-server.scraperapi.com:8001"
-
-    # 使用 SingleProxy，而不是 scholarly 内置 ScraperAPI 函数
-    pg.SingleProxy(http=proxy_url, https=proxy_url)
-
-    scholarly.use_proxy(pg)
-
-    # 设置请求超时和重试次数，避免网络不通时拖太久
-    try:
-        scholarly.set_timeout(10)   # 单次请求最多等 10s
-        scholarly.set_retries(1)    # 最多重试 1 次
-    except Exception as e:
-        print("设置 timeout/retries 失败，但不影响主流程：", e)
-
-    return True
+def timeout_handler(signum, frame):
+    raise TimeoutException()
 
 
-# =======================
-#  Google Scholar Citation 抓取
-# =======================
+# =====================================================
+#  Google Scholar citation 抓取（无代理 + 超时自动跳过）
+# =====================================================
 def get_scholar():
-    # 启动代理
-    if not setup_scholar_proxy():
-        return  # 不配置代理就直接跳过
+
+    # 设置整个 get_scholar 的超时时间（单位：秒）
+    signal.signal(signal.SIGALRM, timeout_handler)
+    signal.alarm(60)
 
     try:
+        # 限制单次请求超时时间 / 重试次数，进一步避免卡死
+        scholarly.set_timeout(10)
+        scholarly.set_retries(1)
+
         author = scholarly.search_author_id("SSaBaioAAAAJ")
         scholarly.fill(author, sections=['basics', 'indices', 'counts', 'publications'])
+
+        # Scholar 请求成功，关闭超时 alarm
+        signal.alarm(0)
+
+    except TimeoutException:
+        print("Google Scholar 请求超过 60 秒，已跳过")
+        return
+
     except Exception as e:
         print("Google Scholar 请求失败，已跳过：", e)
         return
 
-    # 数据整理
+    # === 生成 shields.io JSON ===
     author['updated'] = str(datetime.now())
     author['publications'] = {v['author_pub_id']: v for v in author['publications']}
 
-    # 输出 badge 用的数据
     shieldio_data = {
         "schemaVersion": 1,
         "label": "citations",
         "message": f"{author['citedby']}",
     }
 
-    with open('./assets/gs_data_shieldsio.json', 'w') as outfile:
-        json.dump(shieldio_data, outfile, ensure_ascii=False)
+    with open('./assets/gs_data_shieldsio.json', 'w') as f:
+        json.dump(shieldio_data, f, ensure_ascii=False)
 
-    print("Google Scholar 数据已更新")
+    print("Google Scholar 数据已更新：", author['citedby'])
 
 
-# =======================
-#  GitHub Stars 统计
-# =======================
+# =====================================================
+#  GitHub stars 统计
+# =====================================================
 def get_repo_stars(repo_full_name):
     """返回 repo star 数"""
     url = f"https://api.github.com/repos/{repo_full_name}"
@@ -94,15 +87,15 @@ def get_github(repo_list):
         "message": f"{total}",
     }
 
-    with open('./assets/stars_data_shieldsio.json', 'w') as outfile:
-        json.dump(shieldio_data, outfile, ensure_ascii=False)
+    with open('./assets/stars_data_shieldsio.json', 'w') as f:
+        json.dump(shieldio_data, f, ensure_ascii=False)
 
     print("GitHub stars 数据已更新，总 stars =", total)
 
 
-# =======================
+# =====================================================
 #  要统计的仓库列表
-# =======================
+# =====================================================
 repos = [
     "WangRongsheng/awesome-LLM-resources",
     "WangRongsheng/XrayGLM",
@@ -121,11 +114,10 @@ repos = [
 ]
 
 
-# =======================
-#  主入口
-# =======================
+# =====================================================
+#  主入口（Scholar 失败不会影响 Stars）
+# =====================================================
 if __name__ == "__main__":
-    # Scholar 错误不会影响 GitHub stars 更新
     try:
         get_scholar()
     except Exception as e:

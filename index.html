@@ -73,11 +73,11 @@
             <br><br>
             <td style="padding:0px;width:100%;vertical-align:middle">
 			  <P>
-                <li>[May 2025] Two papers accepted by <span style="text-decoration: underline; text-decoration-color: #FFD700;">ACL 2025</span>, congrats to all co-authors!
+                <li>[May 2025] Two papers accepted by <span style="text-decoration: underline; text-decoration-color: #f3d008;">ACL 2025</span>, congrats to all co-authors!
                 </li>
               </P>
               <P>
-                <li>[Apr. 2025] Our team won the <span style="text-decoration: underline; text-decoration-color: #FFD700;">gold medal</span> in the AIMO-2 competition, ranking 14th out of 2213!
+                <li>[Apr. 2025] Our team won the <span style="text-decoration: underline; text-decoration-color: #f3d008;">gold medal</span> in the AIMO-2 competition, ranking 14th out of 2213!
                 </li>
               </P>
             </td>
@@ -800,6 +800,129 @@
           </tr> -->
         </tbody></table>
 
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+            <tr>
+              <br>
+              <heading>Projects</heading>
+              <br>
+              <p>🚀 Build in Open. Grow Together.</p>
+              <td style="padding:0px;width:100%;vertical-align:middle">
+                <div id="tagcloud-container">
+                    <p style="text-align:center; color:#999; padding-top: 180px;">Loading projects...</p>
+                </div>
+              </td>
+            </tr>
+        </tbody></table>
+
+        <script>
+            (function() {
+                const container = document.getElementById('tagcloud-container');
+                // Custom project list
+                const myProjects = [
+                    { name: "MedGen", html_url: "https://github.com/FreedomIntelligence/MedGen", stargazers_count: 30 },
+                    { name: "awesome-LLM-resources", html_url: "https://github.com/WangRongsheng/awesome-LLM-resources", stargazers_count: 7300 },
+                    { name: "Med-MAT", html_url: "https://github.com/FreedomIntelligence/Med-MAT", stargazers_count: 40 },
+                    { name: "CareGPT", html_url: "https://github.com/WangRongsheng/CareGPT", stargazers_count: 1000 },
+                    { name: "XrayGLM", html_url: "https://github.com/WangRongsheng/XrayGLM", stargazers_count: 1100 },
+                    { name: "ChatPaper", html_url: "https://github.com/kaixindelele/ChatPaper", stargazers_count: 19200 },
+                    { name: "ChatGenTitle", html_url: "https://github.com/WangRongsheng/ChatGenTitle", stargazers_count: 840 },
+                    { name: "Awesome-AI4Med", html_url: "https://github.com/FreedomIntelligence/Awesome-AI4Med", stargazers_count: 2480 },
+                    { name: "TinyDeepSeek", html_url: "https://github.com/FreedomIntelligence/TinyDeepSeek", stargazers_count: 30 },
+                    { name: "MiniGPT-4", html_url: "https://github.com/Vision-CAIR/MiniGPT-4", stargazers_count: 25800 }
+                ];
+
+                function initTagCloud(projects) {
+                    container.innerHTML = '';
+                    const tags = [];
+                    // Base radius for calculations (height-based to keep it fitting)
+                    const r = Math.min(container.offsetWidth, container.offsetHeight) / 2 * 0.8;
+                    // X-stretch factor for ellipsoid shape
+                    const stretchX = 1.5;
+                    
+                    projects.forEach(p => {
+                        const el = document.createElement('a');
+                        el.href = p.html_url;
+                        el.target = '_blank';
+                        el.className = 'tagcloud-item';
+                        // Show name and stars
+                        el.innerHTML = `${p.name} <span style="font-size:0.8em; opacity:0.8">🌟${p.stargazers_count}</span>`;
+                        el.style.color = '#444';
+                        
+                        container.appendChild(el);
+                        tags.push({ el: el, x: 0, y: 0, z: 0 });
+                    });
+
+                    let angleX = 0.001;
+                    let angleY = 0.001;
+                    let isHovering = false;
+                    const cx = container.offsetWidth / 2;
+                    const cy = container.offsetHeight / 2;
+
+                    // Initial positions - Golden Spiral distribution on sphere
+                    const len = tags.length;
+                    for(let i=0; i<len; i++) {
+                        const phi = Math.acos(-1 + (2 * i + 1) / len);
+                        const theta = Math.sqrt(len * Math.PI) * phi;
+                        tags[i].x = r * Math.cos(theta) * Math.sin(phi);
+                        tags[i].y = r * Math.sin(theta) * Math.sin(phi);
+                        tags[i].z = r * Math.cos(phi);
+                    }
+
+                    function rotate() {
+                        if (!isHovering) {
+                            const cosX = Math.cos(angleX);
+                            const sinX = Math.sin(angleX);
+                            const cosY = Math.cos(angleY);
+                            const sinY = Math.sin(angleY);
+
+                            tags.forEach(tag => {
+                                // Rotate around X-axis
+                                let y = tag.y * cosX - tag.z * sinX;
+                                let z = tag.z * cosX + tag.y * sinX;
+                                tag.y = y;
+                                tag.z = z;
+
+                                // Rotate around Y-axis
+                                let x = tag.x * cosY - tag.z * sinY;
+                                z = tag.z * cosY + tag.x * sinY;
+                                tag.x = x;
+                                tag.z = z;
+                            });
+                        }
+
+                        tags.forEach(tag => {
+                            const perspective = 2 * r;
+                            const scale = perspective / (perspective - tag.z);
+                            const alpha = (tag.z + r) / (2 * r);
+                            
+                            // Apply stretchX here to create ellipsoid shape visually
+                            tag.el.style.left = (cx + tag.x * stretchX) - tag.el.offsetWidth / 2 + 'px';
+                            tag.el.style.top = (cy + tag.y) - tag.el.offsetHeight / 2 + 'px';
+                            tag.el.style.transform = `scale(${scale})`;
+                            tag.el.style.opacity = Math.max(0.2, alpha);
+                            tag.el.style.zIndex = Math.round(scale * 100);
+                        });
+                        requestAnimationFrame(rotate);
+                    }
+                    
+                    container.addEventListener('mouseenter', () => {
+                        isHovering = true;
+                    });
+                    
+                    container.addEventListener('mouseleave', () => {
+                        isHovering = false;
+                    });
+
+                    // Start gentle rotation
+                    angleX = 0.002;
+                    angleY = 0.002;
+                    rotate();
+                }
+
+                initTagCloud(myProjects);
+            })();
+        </script>
+
         <table style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           <tr>
             <br>
@@ -924,6 +1047,31 @@
       </td>
     </tr>
   </table>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" onclick="scrollToTop()" title="Go to top">↑</button>
+
+  <script>
+    // Get the button
+    var mybutton = document.getElementById("backToTop");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function scrollToTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
 </body>
 <!-- <footer>
 <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=99b2b5&w=200&t=tt&d=w1jsZcYWX6uhqj7qrDV6Yu5EWXmHKKNJ4FzY6TnXcWs&co=f8f9fa&ct=b32b42'></script>

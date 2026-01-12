@@ -168,3 +168,61 @@ span.highlight {
 .yellow-background {
   background-color: lightyellow;
 }
+
+/* Tag Cloud Styles */
+#tagcloud-container {
+  width: 100%;
+  max-width: 800px;
+  height: 300px;
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
+  /* background: #fcfcfc; */
+  /* border: 1px solid #eee; */
+  border-radius: 8px;
+}
+
+.tagcloud-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-decoration: none;
+  font-family: 'Lato', Verdana, Helvetica, sans-serif;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  transform-origin: 50% 50%;
+  transition: color 0.2s;
+  cursor: pointer;
+  will-change: transform, opacity, filter;
+}
+
+.tagcloud-item:hover {
+  color: #ff0000 !important;
+  z-index: 1000 !important;
+}
+
+/* Back to Top Button */
+#backToTop {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: #555;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+#backToTop:hover {
+  background-color: #333;
+  opacity: 1;
+}

@@ -223,6 +223,8 @@
               -moz-transition: all 0.3s;
               background: white;
               cursor: default;
+              min-width: 80px;
+              box-sizing: border-box;
             }
             
             .tree li .node:hover {
@@ -242,6 +244,7 @@
               font-weight: bold;
               font-size: 14px;
               box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+              min-width: auto;
             }
             
             .tree .node.level2 {
@@ -249,6 +252,8 @@
               color: #2d3748;
               border-color: #cbd5e0;
               font-weight: 500;
+              width: 100px;
+              text-align: center;
             }
             
             .tree .node.level3 {
@@ -256,6 +261,7 @@
               color: #4a5568;
               border-color: #e2e8f0;
               cursor: pointer;
+              min-width: auto;
             }
             
             .tree .node.level3:hover {
@@ -415,10 +421,10 @@
               <button class="popup-close" onclick="closePopup('multimodal-gen')">&times;</button>
               <div class="popup-title">Multimodal Generation - Publications</div>
               <div class="popup-paper">
-                <a href="https://arxiv.org/abs/2507.05675" target="_blank">MedGen: Unlocking Medical Video Generation by Scaling Granularly-annotated Medical Videos</a>
+                <a href="https://arxiv.org/abs/2507.05675 " target="_blank">MedGen: Unlocking Medical Video Generation by Scaling Granularly-annotated Medical Videos</a>
               </div>
 			  <div class="popup-paper">
-                <a href="https://arxiv.org/" target="_blank">MicroVerse: A Preliminary Exploration Toward a Micro-World Simulation</a>
+                <a href="https://arxiv.org/ " target="_blank">MicroVerse: A Preliminary Exploration Toward a Micro-World Simulation</a>
               </div>
             </div>
           </div>
@@ -428,7 +434,7 @@
               <button class="popup-close" onclick="closePopup('mllm')">&times;</button>
               <div class="popup-title">Multimodal Large Models - Publications</div>
               <div class="popup-paper">
-                <a href="https://aclanthology.org/2025.acl-long.639.pdf" target="_blank">Exploring Compositional Generalization of Multimodal LLMs for Medical Imaging</a>
+                <a href="https://aclanthology.org/2025.acl-long.639.pdf " target="_blank">Exploring Compositional Generalization of Multimodal LLMs for Medical Imaging</a>
               </div>
             </div>
           </div>

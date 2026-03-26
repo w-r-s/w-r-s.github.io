@@ -63,18 +63,47 @@
               <heading>News</heading>
             <br><br>
             <td style="padding:0px;width:100%;vertical-align:middle">
-			  <P>
-                <li>[Jan. 2026] One paper accepted by <span style="text-decoration: underline; text-decoration-color: #f3d008;">ICLR 2026</span>, congrats to all co-authors! See you at Brazil!
+              <ul class="news-list" id="newsList">
+                <li class="news-item">
+                  <span class="news-dot"></span>
+                  <div class="news-body">
+                    <span class="news-date">Jan. 2026</span>
+                    <span class="news-text">One paper accepted by <span class="venue">ICLR 2026</span>, congrats to all co-authors! See you at Brazil!</span>
+                  </div>
                 </li>
-              </P>
-			  <P>
-                <li>[May 2025] Two papers accepted by <span style="text-decoration: underline; text-decoration-color: #f3d008;">ACL 2025</span>, congrats to all co-authors!
+                <li class="news-item">
+                  <span class="news-dot"></span>
+                  <div class="news-body">
+                    <span class="news-date">May 2025</span>
+                    <span class="news-text">Two papers accepted by <span class="venue">ACL 2025</span>, congrats to all co-authors!</span>
+                  </div>
                 </li>
-              </P>
-              <P>
-                <li>[Apr. 2025] Our team won the <span style="text-decoration: underline; text-decoration-color: #f3d008;">gold medal</span> in the AIMO-2 competition, ranking 14th out of 2213!
+                <li class="news-item">
+                  <span class="news-dot"></span>
+                  <div class="news-body">
+                    <span class="news-date">Apr. 2025</span>
+                    <span class="news-text">Our team won the <span class="venue">gold medal</span> in the AIMO-2 competition, ranking 14th out of 2213!</span>
+                  </div>
                 </li>
-              </P>
+              </ul>
+              <button class="news-toggle" id="newsToggle"></button>
+              <script>
+                (function() {
+                  var list = document.getElementById('newsList');
+                  var btn = document.getElementById('newsToggle');
+                  var items = list.querySelectorAll('.news-item');
+                  var MAX = 5;
+                  if (items.length > MAX) {
+                    var hidden = items.length - MAX;
+                    btn.textContent = 'Show ' + hidden + ' more...';
+                    btn.classList.add('visible');
+                    btn.addEventListener('click', function() {
+                      var expanded = list.classList.toggle('expanded');
+                      btn.textContent = expanded ? 'Show less' : 'Show ' + hidden + ' more...';
+                    });
+                  }
+                })();
+              </script>
             </td>
           </tr>
         </tbody></table>
@@ -654,6 +683,8 @@
               <a href="https://github.com/FreedomIntelligence/MicroVerse">Code</a>
               /
               <a href="https://arxiv.org/abs/2603.00585">Paper</a>
+              /
+              <a href="assets/poster/MicroVerse_Poster.pdf">Poster</a>
               <!-- /
               <a href="https://huggingface.co/datasets/FreedomIntelligence/">Dataset</a>
 			  /
@@ -1155,29 +1186,168 @@
   </table>
 
   <!-- Back to Top Button -->
-  <button id="backToTop" onclick="scrollToTop()" title="Go to top">↑</button>
+  <button id="backToTop" onclick="scrollToTop()" title="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
 
   <div id="toast" class="toast-message">✅复制完成</div>
 
-  <script>
-    // Get the button
-    var mybutton = document.getElementById("backToTop");
-
-    // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-      } else {
-        mybutton.style.display = "none";
+  <!-- PDF Modal Overlay -->
+  <style>
+    #pdfModal {
+      display:none;
+      position:fixed;
+      top:0;left:0;
+      width:100%;height:100%;
+      z-index:9999;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      background:rgba(0,0,0,0.45);
+      justify-content:center;
+      align-items:center;
+      opacity:0;
+      transition:opacity 0.25s ease;
+    }
+    #pdfModal.active { opacity:1; }
+    #pdfModal .pdf-container {
+      position:relative;
+      width:90%;
+      height:90%;
+      max-width:960px;
+      background:rgba(255,255,255,0.88);
+      border-radius:12px;
+      box-shadow:0 8px 32px rgba(0,0,0,0.3);
+      overflow:hidden;
+      transform:scale(0.95);
+      transition:transform 0.25s ease;
+    }
+    #pdfModal.active .pdf-container { transform:scale(1); }
+    #pdfModal .pdf-topbar {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:40px;
+      padding:0 14px;
+      background:rgba(0,0,0,0.06);
+      border-bottom:1px solid rgba(0,0,0,0.08);
+      font-size:13px;
+      color:#444;
+      user-select:none;
+    }
+    #pdfModal .pdf-topbar span {
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      max-width:calc(100% - 50px);
+    }
+    #pdfModal .pdf-close-btn {
+      background:none;
+      border:none;
+      font-size:22px;
+      color:#666;
+      cursor:pointer;
+      width:32px;height:32px;
+      border-radius:6px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:background 0.15s, color 0.15s;
+      flex-shrink:0;
+    }
+    #pdfModal .pdf-close-btn:hover {
+      background:rgba(0,0,0,0.1);
+      color:#222;
+    }
+    #pdfModal iframe {
+      width:100%;
+      height:calc(100% - 40px);
+      border:none;
+    }
+    @media (max-width:600px) {
+      #pdfModal .pdf-container {
+        width:98%;
+        height:95%;
+        border-radius:8px;
       }
     }
+  </style>
 
-    // When the user clicks on the button, scroll to the top of the document
+  <div id="pdfModal">
+    <div class="pdf-container">
+      <div class="pdf-topbar">
+        <span id="pdfModalTitle"></span>
+        <button class="pdf-close-btn" id="pdfModalClose" title="Close">&times;</button>
+      </div>
+      <iframe id="pdfModalFrame" src=""></iframe>
+    </div>
+  </div>
+
+  <script>
+    // PDF Modal logic
+    (function() {
+      var modal = document.getElementById('pdfModal');
+      var frame = document.getElementById('pdfModalFrame');
+      var title = document.getElementById('pdfModalTitle');
+      var closeBtn = document.getElementById('pdfModalClose');
+
+      function openPdf(url) {
+        // Show filename in topbar
+        var name = decodeURIComponent(url.split('/').pop());
+        title.textContent = name;
+        frame.src = url;
+        modal.style.display = 'flex';
+        // Trigger reflow then animate in
+        modal.offsetHeight;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function closePdf() {
+        modal.classList.remove('active');
+        setTimeout(function() {
+          modal.style.display = 'none';
+          frame.src = '';
+        }, 250);
+        document.body.style.overflow = '';
+      }
+      closeBtn.addEventListener('click', closePdf);
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) closePdf();
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closePdf();
+      });
+
+      // Intercept local PDF links
+      document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href$=".pdf"]');
+        if (!link) return;
+        var href = link.getAttribute('href');
+        // Only intercept local PDF links (assets/, pdf/), skip external URLs
+        if (href && !href.startsWith('http')) {
+          e.preventDefault();
+          openPdf(href);
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    // Back to Top
+    (function() {
+      var btn = document.getElementById('backToTop');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+        }
+      });
+    })();
+
     function scrollToTop() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 </body>

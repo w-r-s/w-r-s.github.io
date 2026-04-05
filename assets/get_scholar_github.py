@@ -111,6 +111,9 @@ repos = [
     "WangRongsheng/KDAT",
     "kaixindelele/ChatPaper",
     "FreedomIntelligence/Awesome-AI4Med",
+    "FreedomIntelligence/OpenClaw-Medical-Skills",
+    "FreedomIntelligence/Med-MAT",
+    "FreedomIntelligence/TinyDeepSeek"
 ]
 
 

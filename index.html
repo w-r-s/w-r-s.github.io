@@ -40,7 +40,7 @@
 			  My research focuses on exploring trustworthy medical large language models (LLMs) and multimodal large models (MLLMs), as well as exploring multimodal generative for healthcare applications. I am a perfectionist. I want to solve the problems in my hands in perfect ways, which is, however, not achievable in many situations.
 			</p>
 			<p>
-				I use 
+				I use
 				<a href="https://github.com/anthropics/claude-code">
 				  <img src="images/icon/coding.png" alt="Claude Code icon" style="height:16px; vertical-align:middle;">
 				  Claude Code
@@ -51,12 +51,13 @@
 				  CodeX
 				</a>
 				for coding.
-				
-				I have used 
+
+				I have used
 				<img src="https://token.poco-ai.com/api/badges/wrs6?metric=tokens&style=plastic" alt="tokens badge">
-				tokens so far, with a total cost of 
+				tokens so far, with a total cost of
 				<img src="https://token.poco-ai.com/api/badges/wrs6?metric=cost&style=plastic" alt="cost badge">.
 			</p>
+			<div style="width: 100%; height: 1px; background: linear-gradient(to right, transparent, #ccc 20%, #ccc 80%, transparent); margin: 10px 0;"></div>
 
               <p style="text-align:center">
                 <a href="mailto:rongshengwang@link.cuhk.edu.cn">Email</a> &nbsp/&nbsp
@@ -69,7 +70,7 @@
 			  </p>
             </td>
             <td style="padding:2.5%;width:40%;max-width:40%">
-              <a href="images/my/wrs.jpeg"><img style="width:85%;max-width:85%" alt="profile photo" src="images/my/wrs.jpeg" class="hoverZoomLink"></a>
+              <img style="width:85%;max-width:85%;border-radius:8px;" alt="profile photo" src="images/my/wrs.jpeg">
               <!-- <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgengyiran.github.io&count_bg=%23E79717E9&title_bg=%23575454&icon=&icon_color=%23222121&title=hits&edge_flat=true"/></a> -->
               <!-- <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgengyiran.github.io&count_bg=%23E79717E9&title_bg=%23575454&icon=&icon_color=%23222121&title=visits&edge_flat=true"/></a> -->
             </td>
@@ -190,6 +191,9 @@
               cursor: move;
               position: relative;
               user-select: none;
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
             
             .tree-container.dragging {
@@ -481,17 +485,10 @@
                   <li>
                     <span class="node root">Research Interests</span>
                     <ul>
-                      <li>
-                        <span class="node level2">General</span>
-                      </li>
-                      <li>
-                        <span class="node level2">Medical</span>
-                        <ul>
-                          <li><span class="node level3" onclick="showPopup('multimodal-gen')">Multimodal Generation <span class="node-badge">2</span></span></li>
-                          <li><span class="node level3" onclick="showPopup('mllm')">Multimodal Models <span class="node-badge">1</span></span></li>
-                          <li><span class="node level3" onclick="showPopup('llm')">Language Models <span class="node-badge">0</span></span></li>
-                        </ul>
-                      </li>
+                      <li><span class="node level3" onclick="showPopup('multimodal-gen')">Multimodal Generation <span class="node-badge">1</span></span></li>
+                      <li><span class="node level3" onclick="showPopup('mllm')">Multimodal Models <span class="node-badge">1</span></span></li>
+                      <li><span class="node level3" onclick="showPopup('world-model')">World Model <span class="node-badge">1</span></span></li>
+                      <li><span class="node level3" onclick="showPopup('llm')">Language Models <span class="node-badge">0</span></span></li>
                     </ul>
                   </li>
                 </ul>
@@ -507,9 +504,6 @@
               <div class="popup-paper">
                 <a href="https://arxiv.org/abs/2507.05675 " target="_blank">MedGen: Unlocking Medical Video Generation by Scaling Granularly-annotated Medical Videos</a>
               </div>
-			  <div class="popup-paper">
-                <a href="https://arxiv.org/abs/2603.00585 " target="_blank">MicroVerse: A Preliminary Exploration Toward a Micro-World Simulation</a>
-              </div>
             </div>
           </div>
           
@@ -522,7 +516,17 @@
               </div>
             </div>
           </div>
-          
+
+          <div class="popup-overlay" id="popup-world-model">
+            <div class="popup-content">
+              <button class="popup-close" onclick="closePopup('world-model')">&times;</button>
+              <div class="popup-title">World Model - Publications</div>
+              <div class="popup-paper">
+                <a href="https://arxiv.org/abs/2603.00585 " target="_blank">MicroVerse: A Preliminary Exploration Toward a Micro-World Simulation</a>
+              </div>
+            </div>
+          </div>
+
           <div class="popup-overlay" id="popup-llm">
             <div class="popup-content">
               <button class="popup-close" onclick="closePopup('llm')">&times;</button>
@@ -1013,16 +1017,16 @@
                 // Custom project list
                 const myProjects = [
                     { name: "MedGen", html_url: "https://github.com/FreedomIntelligence/MedGen", stargazers_count: 30 },
-                    { name: "awesome-LLM-resources", html_url: "https://github.com/WangRongsheng/awesome-LLM-resources", stargazers_count: 7700 },
+                    { name: "awesome-LLM-resources", html_url: "https://github.com/WangRongsheng/awesome-LLM-resources", stargazers_count: 8200 },
                     { name: "Med-MAT", html_url: "https://github.com/FreedomIntelligence/Med-MAT", stargazers_count: 40 },
                     { name: "CareGPT", html_url: "https://github.com/WangRongsheng/CareGPT", stargazers_count: 1000 },
                     { name: "XrayGLM", html_url: "https://github.com/WangRongsheng/XrayGLM", stargazers_count: 1100 },
-                    { name: "ChatPaper", html_url: "https://github.com/kaixindelele/ChatPaper", stargazers_count: 19300 },
+                    { name: "ChatPaper", html_url: "https://github.com/kaixindelele/ChatPaper", stargazers_count: 19500 },
                     { name: "ChatGenTitle", html_url: "https://github.com/WangRongsheng/ChatGenTitle", stargazers_count: 840 },
-                    { name: "Awesome-AI4Med", html_url: "https://github.com/FreedomIntelligence/Awesome-AI4Med", stargazers_count: 2580 },
+                    { name: "Awesome-AI4Med", html_url: "https://github.com/FreedomIntelligence/Awesome-AI4Med", stargazers_count: 2780 },
                     { name: "TinyDeepSeek", html_url: "https://github.com/FreedomIntelligence/TinyDeepSeek", stargazers_count: 30 },
                     { name: "MiniGPT-4", html_url: "https://github.com/Vision-CAIR/MiniGPT-4", stargazers_count: 25800 },
-					{ name: "OpenClaw-Medical-Skills", html_url: "https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills", stargazers_count: 1056 }
+					          { name: "OpenClaw-Medical-Skills", html_url: "https://github.com/FreedomIntelligence/OpenClaw-Medical-Skills", stargazers_count: 2400 }
                 ];
 
                 function initTagCloud(projects) {
@@ -1138,6 +1142,7 @@
             </p> -->
             <p>
               <li>Journal Reviewer: <a href="https://www.embs.org/jbhi/">JBHI</a>、<a href="https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=42">TMI</a></li>
+              <li>Conference Reviewer: <a href="https://neurips.cc/">NeurIPS 2026</a></li>
             </p>
           </td>
         </tr>

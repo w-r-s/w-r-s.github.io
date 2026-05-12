@@ -1015,9 +1015,30 @@
                 <div id="tagcloud-container">
                     <p style="text-align:center; color:#999; padding-top: 180px;">Loading projects...</p>
                 </div>
+                <div class="screenshot-projects" id="screenshotProjects">
+                  <div class="screenshot-projects-track" aria-label="Screenshot projects">
+                    <button class="screenshot-project-card" type="button"
+                      data-title="AhaMed"
+                      data-description="An AI-powered medical learning platform for students — Learn faster. Build smarter. Explore deeper."
+                      data-url="https://ahamed.top/">
+                      <img src="images/projects/ahamed.png" alt="AhaMed screenshot">
+                      <span><i class="project-online-dot" aria-hidden="true"></i>AhaMed</span>
+                    </button>
+                  </div>
+                </div>
               </td>
             </tr>
         </tbody></table>
+
+        <div class="screenshot-project-modal" id="screenshotProjectModal" aria-hidden="true">
+          <div class="screenshot-project-dialog" role="dialog" aria-modal="true" aria-labelledby="screenshotProjectTitle">
+            <button class="screenshot-project-close" type="button" aria-label="Close">&times;</button>
+            <img id="screenshotProjectImage" src="" alt="">
+            <h3 id="screenshotProjectTitle"></h3>
+            <p id="screenshotProjectDescription"></p>
+            <a id="screenshotProjectLink" href="#" target="_blank" rel="noopener">Visit Project</a>
+          </div>
+        </div>
 
         <script>
             (function() {
@@ -1126,6 +1147,56 @@
                 }
 
                 initTagCloud(myProjects);
+            })();
+        </script>
+
+        <script>
+            (function() {
+                const section = document.getElementById('screenshotProjects');
+                const track = section ? section.querySelector('.screenshot-projects-track') : null;
+                const modal = document.getElementById('screenshotProjectModal');
+                const modalImage = document.getElementById('screenshotProjectImage');
+                const modalTitle = document.getElementById('screenshotProjectTitle');
+                const modalDescription = document.getElementById('screenshotProjectDescription');
+                const modalLink = document.getElementById('screenshotProjectLink');
+                const closeBtn = modal ? modal.querySelector('.screenshot-project-close') : null;
+
+                if (!section || !track || !modal || !modalImage || !modalTitle || !modalDescription || !modalLink || !closeBtn) return;
+
+                const cards = Array.from(track.querySelectorAll('.screenshot-project-card'));
+                if (cards.length > 3) {
+                    section.classList.add('is-scrollable');
+                }
+
+                function openModal(card) {
+                    const image = card.querySelector('img');
+                    modalImage.src = image ? image.src : '';
+                    modalImage.alt = image ? image.alt : '';
+                    modalTitle.textContent = card.dataset.title || '';
+                    modalDescription.textContent = card.dataset.description || '';
+                    modalLink.href = card.dataset.url || '#';
+                    modal.classList.add('active');
+                    modal.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                    closeBtn.focus();
+                }
+
+                function closeModal() {
+                    modal.classList.remove('active');
+                    modal.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                }
+
+                cards.forEach(card => {
+                    card.addEventListener('click', () => openModal(card));
+                });
+                closeBtn.addEventListener('click', closeModal);
+                modal.addEventListener('click', event => {
+                    if (event.target === modal) closeModal();
+                });
+                document.addEventListener('keydown', event => {
+                    if (event.key === 'Escape' && modal.classList.contains('active')) closeModal();
+                });
             })();
         </script>
 

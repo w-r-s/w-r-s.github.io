@@ -256,8 +256,8 @@
           </div>
 
           <script>
-            // Inject counts into tag buttons
-            (function() {
+            // Inject counts into tag buttons (after full DOM is parsed)
+            document.addEventListener('DOMContentLoaded', function() {
               const rows = document.querySelectorAll('tr[data-tags]');
               const total = rows.length;
               document.querySelectorAll('.tag-btn').forEach(function(btn) {
@@ -265,7 +265,7 @@
                 const count = tag === 'all' ? total : Array.from(rows).filter(r => r.dataset.tags.split(',').includes(tag)).length;
                 btn.insertAdjacentHTML('beforeend', '<span class="tag-count">' + count + '</span>');
               });
-            })();
+            });
 
             // Tag filter
             document.getElementById('tagFilter').addEventListener('click', function(e) {

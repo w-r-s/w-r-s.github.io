@@ -45,7 +45,7 @@
 			  <a href="https://www.cuhk.edu.cn/en">The Chinese University of Hong Kong, Shenzhen</a>,
 			  supervised by Prof. 
 			  <a href="https://wabyking.github.io/old.html" target="_blank">Benyou Wang</a>.
-			  My research focuses on exploring trustworthy medical large language models (LLMs) and multimodal large models (MLLMs), as well as exploring multimodal generative for healthcare applications. I am a perfectionist. I want to solve the problems in my hands in perfect ways, which is, however, not achievable in many situations.
+			  My research focuses on exploring trustworthy medical large language models (LLMs) and multimodal large models (MLLMs), as well as exploring multimodal generative for healthcare applications.
 			</p>
 			<p>
 				I like collaborating with
@@ -58,7 +58,7 @@
 				  <img src="images/icon/codex.png" alt="Codex icon" style="height:16px; vertical-align:middle;">
 				  CodeX
 				</a>
-				. They are my good partners!
+				. They are my good partners! I am a perfectionist. I want to solve the problems in my hands in perfect ways, which is, however, not achievable in many situations.
 			</p>
 			<div style="width: 100%; height: 1px; background: linear-gradient(to right, transparent, #ccc 20%, #ccc 80%, transparent); margin: 10px 0;"></div>
 
@@ -178,7 +178,7 @@
               display: flex;
               flex-wrap: wrap;
               gap: 8px;
-              margin: 20px auto 10px;
+              margin: 16px auto 0;
               justify-content: center;
             }
             .tag-btn {
@@ -244,10 +244,10 @@
           
           <div class="tag-filter" id="tagFilter">
             <button class="tag-btn active" data-tag="all">All</button>
-            <button class="tag-btn" data-tag="multimodal-gen">Multimodal Generation</button>
-            <button class="tag-btn" data-tag="mllm">Multimodal Models</button>
+            <button class="tag-btn" data-tag="multimodal-gen">Generation</button>
+            <button class="tag-btn" data-tag="mllm">Multimodal</button>
             <button class="tag-btn" data-tag="world-model">World Model</button>
-            <button class="tag-btn" data-tag="llm">Language Models</button>
+            <button class="tag-btn" data-tag="benchmark">Benchmark</button>
           </div>
 
           <script>
@@ -306,8 +306,6 @@
             });
             
           </script>
-          
-          <br>
 
           <!-- RoboVerse -->
               
@@ -363,6 +361,66 @@
               <p>RoboVerse is a comprehensive framework for advancing robotics through a simulation platform, synthetic dataset, and unified benchmarks. </p>
             </td>
           </tr> -->
+
+          <tr data-tags="benchmark">
+            <td style="padding:20px;width:30%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id='gamecraft_image'>
+                  <br>
+                  <img src='images/paper/gamecraft-bench.png' width="190"></div>
+                  <br>
+                  <img src='images/paper/gamecraft-bench.png' width="190">
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/tongxuluo/gamecraft-bench?style=flat-square&color=yellow&label=stars&logo=GitHub">
+                </div>
+              <script type="text/javascript">
+                function gamecraft_start() {
+                  document.getElementById('gamecraft_image').style.opacity = "1";
+                }
+                function gamecraft_stop() {
+                  document.getElementById('gamecraft_image').style.opacity = "0";
+                }
+                gamecraft_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:70%;vertical-align:middle">
+              <a href="https://arxiv.org/abs/2606.17861">
+                <papertitle>GameCraft-Bench: Can Agents Build Playable Games End-to-End in a Real Game Engine?</papertitle>
+              </a>
+              <br>
+              <a:focus>Tongxu Luo†</a:focus>,
+              <a:focus><strong>Rongsheng Wang†</strong></a:focus>,
+              <a:focus>Jiaxi Bi†</a:focus>,
+              <a:focus>Chenming Xu†</a:focus>,
+              <a:focus>Zhengyang Tang†</a:focus>,
+              <a:focus>Jianlong Chen</a:focus>,
+              <a:focus>Juhao Liang</a:focus>,
+              <a:focus>Ke Ji</a:focus>,
+              <a:focus>Shuqi Guo</a:focus>,
+              <a:focus>Yuhao Du</a:focus>,
+              <a:focus>Fan Bu</a:focus>,
+              <a:focus>Wenyu Du</a:focus>,
+              <a:focus>Xiaotong Zhang</a:focus>,
+              <a:focus>Kyle Li</a:focus>,
+              <a:focus>Shaobo Wang</a:focus>,
+              <a:focus>Linfeng Zhang</a:focus>,
+              <a:focus>Yuxuan Liu</a:focus>,
+              <a:focus>Xin Lai</a:focus>,
+              <a:focus>Chenxin Li</a:focus>,
+              <a:focus>Yiduo Guo</a:focus>,
+              <a:focus>Zhexin Zhang</a:focus>,
+              <a:focus>Xinyuan Wang</a:focus>,
+              <a:focus>Tianyi Bai</a:focus>,
+              <a:focus>Ziniu Li</a:focus>,
+              <a:focus>Benyou Wang*</a:focus>
+              <br>
+              <a href="https://tongxuluo.github.io/gamecraft-bench-website/">Homepage</a>&nbsp;/&nbsp;<a href="https://github.com/tongxuluo/gamecraft-bench">Code</a>&nbsp;/&nbsp;<a href="https://arxiv.org/abs/2606.17861">Paper</a>
+              <br>
+              <em><strong>Preprint</strong></em>
+              <p></p>
+              <p>
+              GameCraft-Bench evaluates whether agents can build playable games end-to-end in a real game engine.
+              </td>
+          </tr>
 
 		<tr style="background-color: lightyellow;" data-tags="world-model">
             <td style="padding:20px;width:30%;vertical-align:middle">
@@ -454,7 +512,7 @@
 			  /
               <a href="https://huggingface.co/FreedomIntelligence/MedGen-14B">Model</a>
               <br>
-              <em><strong>Under Review</strong></em>
+              <em><strong>Preprint</strong></em>
               <p></p>
               <p>
               MedGen is a medical video generation model, built on the large-scale, caption-rich MedVideoCap-55K dataset.
@@ -508,6 +566,7 @@
               Multimodal LLMs achieve strong generalization in medical imaging largely through compositional generalization (CG).
               </td>
           </tr>
+
 
           <!-- <tr>
             <td style="padding:20px;width:30%;vertical-align:middle">

@@ -63,7 +63,7 @@
 			<div style="width: 100%; height: 1px; background: linear-gradient(to right, transparent, #ccc 20%, #ccc 80%, transparent); margin: 10px 0;"></div>
 
               <p style="text-align:center">
-                <a href="mailto:rongshengwang@link.cuhk.edu.cn">Email</a> &nbsp/&nbsp
+                <a href="mailto:rongshengwang@link.cuhk.edu.cn" id="email-copy" title="Click to copy email">Email</a> &nbsp/&nbsp
                 <a href="https://scholar.google.com/citations?user=SSaBaioAAAAJ&hl=en">Google Scholar</a>
 				<img src="https://img.shields.io/endpoint?url=https://w-r-s.github.io/assets/gs_data_shieldsio.json&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations" width="80"/> &nbsp/&nbsp
                 <a href="https://github.com/wangrongsheng">Github</a>
@@ -167,7 +167,7 @@
           </tr>
         </tbody></table>
         
-		<table style="width:100%;border:0px;border-spacing:0 16px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+		<table class="publications-table" style="width:100%;border:0px;border-spacing:0 16px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <heading>Publications</heading>
     <br>
    <p>† Equal contribution. * Corresponding author. The leading papers are <span style="background-color: #FFFEE0;">highlighted</span>.</p>
@@ -217,6 +217,22 @@
             .tag-btn:not(.active) .tag-count {
               background: #e2e8f0;
               color: #4a5568;
+            }
+            .publications-table tr[data-tags] > td {
+              border-top: 1px solid rgba(0, 0, 0, 0.14);
+              border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+              background: #fff;
+            }
+            .publications-table tr[data-tags] > td:first-child {
+              border-left: 1px solid rgba(0, 0, 0, 0.14);
+              border-radius: 8px 0 0 8px;
+            }
+            .publications-table tr[data-tags] > td:last-child {
+              border-right: 1px solid rgba(0, 0, 0, 0.14);
+              border-radius: 0 8px 8px 0;
+            }
+            .publications-table tr[data-tags][style*="lightyellow"] > td {
+              background: lightyellow;
             }
 
             /* 自定义复制提示框样式 */
@@ -274,10 +290,7 @@
               });
             });
 
-            // 复制简介功能
-            document.getElementById('astronaut-btn').addEventListener('click', function() {
-              const text = "王荣胜，香港中文大学（深圳）一年级在读博士研究生，导师为王本友教授。研究方向聚焦于医疗多模态大模型与多模态生成。GitHub 累计获得 12,700+ Stars，参与贡献的项目累计 60,000+ Stars。以第一作者/主要作者身份发表 ACL、ICLR 论文，谷歌学术引用次数超过 500 次。曾获 Kaggle AI 奥林匹克数学竞赛AIMO-2金牌。";
-              
+            function copyText(text) {
               const showToast = () => {
                 const toast = document.getElementById('toast');
                 toast.classList.add('show');
@@ -303,6 +316,17 @@
                 }
                 document.body.removeChild(textArea);
               });
+            }
+
+            // 复制简介功能
+            document.getElementById('astronaut-btn').addEventListener('click', function() {
+              const text = "王荣胜，香港中文大学（深圳）一年级在读博士研究生，导师为王本友教授。研究方向聚焦于医疗多模态大模型与多模态生成。GitHub 累计获得 12,700+ Stars，参与贡献的项目累计 60,000+ Stars。以第一作者/主要作者身份发表 ACL、ICLR 论文，谷歌学术引用次数超过 500 次。曾获 Kaggle AI 奥林匹克数学竞赛AIMO-2金牌。";
+              copyText(text);
+            });
+
+            document.getElementById('email-copy').addEventListener('click', function(e) {
+              e.preventDefault();
+              copyText('rongshengwang@link.cuhk.edu.cn');
             });
             
           </script>
@@ -674,7 +698,7 @@
     
         </tbody></table>
 
-        <p style="text-align:center; margin-top: -20px; font-style: italic;">
+        <p style="text-align:center; margin-top: 2px; font-style: italic;">
           If you would like to view my other publications, you are welcome to access them on my <a href="https://scholar.google.com/citations?user=SSaBaioAAAAJ&hl=en\">Google Scholar</a>.
         </p>
 
@@ -1014,7 +1038,8 @@
               <td style="padding:0px">
                 <br>
                 <p style="text-align:right;font-size:small;">
-                    If you like it, feel free to steal <a href="https://github.com/w-r-s/w-r-s.github.io">this template</a>. 
+                    <a href="https://github.com/WangRongsheng"><img src="https://visitor-badge.laobi.icu/badge?page_id=https://github.com/WangRongsheng" align="bottom" style="width:66px;height:auto;margin-right:6px;" /></a>
+                    If you like it, feel free to steal <a href="https://github.com/w-r-s/w-r-s.github.io">this template</a>.
                 </p>
               </td>
             </tr>

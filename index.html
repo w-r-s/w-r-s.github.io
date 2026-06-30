@@ -1057,8 +1057,11 @@
 
   <section class="mountain-footer" aria-label="Footer landscape">
     <div class="mountain-stage">
-      <img class="mountain-img" src="images/experience/background.jpeg" alt="Snowy mountain landscape" loading="lazy" decoding="async" fetchpriority="low"
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <picture>
+        <source type="image/webp" srcset="images/experience/background-960.webp 960w, images/experience/background-1440.webp 1440w, images/experience/background-1920.webp 1920w" sizes="100vw">
+        <img class="mountain-img" src="images/experience/background.jpeg" alt="Snowy mountain landscape" loading="lazy" decoding="async" fetchpriority="low"
+             onerror="this.style.display='none'; this.closest('picture').nextElementSibling.style.display='block';">
+      </picture>
       <div class="mountain-fallback" style="display:none;"></div>
       <div class="mountain-content">
         <h2>Keep Exploring</h2>

@@ -574,6 +574,10 @@ span.highlight {
   object-position: center;
 }
 
+.mountain-stage picture {
+  display: block;
+}
+
 .mountain-fallback {
   position: absolute;
   inset: 0;

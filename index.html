@@ -817,7 +817,12 @@
                         tags[i].z = r * Math.cos(phi);
                     }
 
+                    let animationId = null;
+                    let isVisible = true;
+
                     function rotate() {
+                        animationId = null;
+                        if (!isVisible) return;
                         if (!isHovering) {
                             const cosX = Math.cos(angleX);
                             const sinX = Math.sin(angleX);
@@ -851,7 +856,14 @@
                             tag.el.style.opacity = Math.max(0.2, alpha);
                             tag.el.style.zIndex = Math.round(scale * 100);
                         });
-                        requestAnimationFrame(rotate);
+                        animationId = requestAnimationFrame(rotate);
+                    }
+
+                    function setVisible(visible) {
+                        isVisible = visible;
+                        if (visible && animationId === null) {
+                            animationId = requestAnimationFrame(rotate);
+                        }
                     }
                     
                     container.addEventListener('mouseenter', () => {
@@ -862,10 +874,15 @@
                         isHovering = false;
                     });
 
-                    // Start gentle rotation
                     angleX = 0.002;
                     angleY = 0.002;
-                    rotate();
+                    if ('IntersectionObserver' in window) {
+                        const observer = new IntersectionObserver(entries => {
+                            setVisible(entries[0].isIntersecting);
+                        }, { rootMargin: '120px' });
+                        observer.observe(container);
+                    }
+                    setVisible(true);
                 }
 
                 initTagCloud(myProjects);
@@ -1033,14 +1050,14 @@
             </tr>
         </tbody></table>
 
-        <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=99b2b5&w=200&t=tt&d=w1jsZcYWX6uhqj7qrDV6Yu5EWXmHKKNJ4FzY6TnXcWs&co=f8f9fa&ct=b32b42'></script>
+        <div id="clustrmaps-container"></div>
       </td>
     </tr>
   </table>
 
   <section class="mountain-footer" aria-label="Footer landscape">
     <div class="mountain-stage">
-      <img class="mountain-img" src="images/experience/background.jpeg" alt="Snowy mountain landscape"
+      <img class="mountain-img" src="images/experience/background.jpeg" alt="Snowy mountain landscape" loading="lazy" decoding="async" fetchpriority="low"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
       <div class="mountain-fallback" style="display:none;"></div>
       <div class="mountain-content">
@@ -1053,7 +1070,7 @@
         <p class="mountain-footnote">
           <span>Rongsheng Wang | 王荣胜</span>
           <span class="mountain-template">
-            <a href="https://github.com/WangRongsheng"><img src="https://visitor-badge.laobi.icu/badge?page_id=https://github.com/WangRongsheng" alt="visitor badge"></a>
+            <a href="https://github.com/WangRongsheng"><img class="lazy-footer-badge" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="https://visitor-badge.laobi.icu/badge?page_id=https://github.com/WangRongsheng" alt="visitor badge" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="66" height="20"></a>
             If you like it, feel free to steal <a href="https://github.com/w-r-s/w-r-s.github.io">this template</a>.
           </span>
         </p>
@@ -1227,6 +1244,44 @@
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  </script>
+  <script>
+    // Defer footer-only third-party requests so the bottom renders immediately.
+    (function() {
+      function loadFooterBadge() {
+        var badge = document.querySelector('.lazy-footer-badge[data-src]');
+        if (!badge) return;
+        badge.src = badge.getAttribute('data-src');
+        badge.removeAttribute('data-src');
+      }
+
+      function deferClustrmaps() {
+        var container = document.getElementById('clustrmaps-container');
+        if (!container || document.getElementById('clustrmaps')) return;
+        var script = document.createElement('script');
+        script.id = 'clustrmaps';
+        script.async = true;
+        script.src = 'https://cdn.clustrmaps.com/map_v2.js?cl=99b2b5&w=200&t=tt&d=w1jsZcYWX6uhqj7qrDV6Yu5EWXmHKKNJ4FzY6TnXcWs&co=f8f9fa&ct=b32b42';
+        container.appendChild(script);
+      }
+
+      if ('IntersectionObserver' in window) {
+        var footer = document.querySelector('.mountain-footer');
+        var observer = new IntersectionObserver(function(entries) {
+          if (!entries[0].isIntersecting) return;
+          loadFooterBadge();
+          observer.disconnect();
+        }, { rootMargin: '300px' });
+        if (footer) observer.observe(footer);
+      } else {
+        loadFooterBadge();
+      }
+
+      var scheduleIdle = window.requestIdleCallback || function(callback) {
+        return setTimeout(callback, 1600);
+      };
+      scheduleIdle(deferClustrmaps);
+    })();
   </script>
   <script>
     // Cursor glow and pooled ripples

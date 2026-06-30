@@ -1033,21 +1033,33 @@
             </tr>
         </tbody></table>
 
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-            <tr>
-              <td style="padding:0px">
-                <br>
-                <p style="text-align:right;font-size:small;">
-                    <a href="https://github.com/WangRongsheng"><img src="https://visitor-badge.laobi.icu/badge?page_id=https://github.com/WangRongsheng" align="bottom" style="width:66px;height:auto;margin-right:6px;" /></a>
-                    If you like it, feel free to steal <a href="https://github.com/w-r-s/w-r-s.github.io">this template</a>.
-                </p>
-              </td>
-            </tr>
-        </tbody></table>
         <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=99b2b5&w=200&t=tt&d=w1jsZcYWX6uhqj7qrDV6Yu5EWXmHKKNJ4FzY6TnXcWs&co=f8f9fa&ct=b32b42'></script>
       </td>
     </tr>
   </table>
+
+  <section class="mountain-footer" aria-label="Footer landscape">
+    <div class="mountain-stage">
+      <img class="mountain-img" src="images/experience/background.jpeg" alt="Snowy mountain landscape"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="mountain-fallback" style="display:none;"></div>
+      <div class="mountain-content">
+        <h2>Keep Exploring</h2>
+        <p class="mountain-sub">Do what matters, even when it's hard.</p>
+        <a href="mailto:rongshengwang@link.cuhk.edu.cn" class="mountain-cta">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <span>Get in Touch</span>
+        </a>
+        <p class="mountain-footnote">
+          <span>Rongsheng Wang | 王荣胜</span>
+          <span class="mountain-template">
+            <a href="https://github.com/WangRongsheng"><img src="https://visitor-badge.laobi.icu/badge?page_id=https://github.com/WangRongsheng" alt="visitor badge"></a>
+            If you like it, feel free to steal <a href="https://github.com/w-r-s/w-r-s.github.io">this template</a>.
+          </span>
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- Back to Top Button -->
   <button id="backToTop" onclick="scrollToTop()" title="Back to top">
@@ -1057,6 +1069,8 @@
   </button>
 
   <div id="toast" class="toast-message">✅复制完成</div>
+
+  <div id="cursor-glow" aria-hidden="true"></div>
 
   <!-- PDF Modal Overlay -->
   <style>
@@ -1213,6 +1227,86 @@
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  </script>
+  <script>
+    // Cursor glow and pooled ripples
+    (function() {
+      var glow = document.getElementById('cursor-glow');
+      if (!glow) return;
+      var noFancy = window.matchMedia &&
+        (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+         window.matchMedia('(hover: none)').matches);
+      if (noFancy) return;
+
+      var tgtX = 0, tgtY = 0, curX = 0, curY = 0;
+      var running = false, primed = false;
+      var EASE = 0.16;
+
+      function frame() {
+        curX += (tgtX - curX) * EASE;
+        curY += (tgtY - curY) * EASE;
+        glow.style.transform = 'translate3d(' + curX + 'px,' + curY + 'px,0)';
+        if (Math.abs(tgtX - curX) > 0.4 || Math.abs(tgtY - curY) > 0.4) {
+          requestAnimationFrame(frame);
+        } else {
+          glow.style.transform = 'translate3d(' + tgtX + 'px,' + tgtY + 'px,0)';
+          running = false;
+        }
+      }
+
+      function kick() {
+        if (!running) {
+          running = true;
+          requestAnimationFrame(frame);
+        }
+      }
+
+      var POOL = 8, pool = [], pi = 0;
+      for (var i = 0; i < POOL; i++) {
+        var el = document.createElement('div');
+        el.className = 'cursor-ripple';
+        document.body.appendChild(el);
+        pool.push(el);
+      }
+
+      function ripple(x, y) {
+        var el = pool[pi];
+        pi = (pi + 1) % POOL;
+        el.style.setProperty('--x', x + 'px');
+        el.style.setProperty('--y', y + 'px');
+        el.classList.remove('go');
+        void el.offsetWidth;
+        el.classList.add('go');
+      }
+
+      var lastRX = -9999, lastRY = -9999, lastRT = 0;
+      document.addEventListener('mousemove', function(e) {
+        tgtX = e.clientX;
+        tgtY = e.clientY;
+        if (!primed) {
+          curX = tgtX;
+          curY = tgtY;
+          primed = true;
+          glow.style.opacity = '1';
+        }
+        kick();
+
+        var now = e.timeStamp || performance.now();
+        var dx = tgtX - lastRX, dy = tgtY - lastRY;
+        if ((dx * dx + dy * dy) > 1100 && (now - lastRT) > 110) {
+          ripple(tgtX, tgtY);
+          lastRX = tgtX;
+          lastRY = tgtY;
+          lastRT = now;
+        }
+      }, { passive: true });
+
+      document.addEventListener('mousedown', function(e) {
+        ripple(e.clientX, e.clientY);
+      }, { passive: true });
+      document.addEventListener('mouseleave', function() { glow.style.opacity = '0'; });
+      document.addEventListener('mouseenter', function() { glow.style.opacity = '1'; });
+    })();
   </script>
 </body>
 <!-- <footer>

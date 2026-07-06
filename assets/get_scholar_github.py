@@ -178,12 +178,10 @@ repos = [
 ]
 
 project_repos = [
-    {"name": "RoboVerse", "repo": "RoboVerseOrg/RoboVerse"},
     {"name": "GameCraft-Bench", "repo": "FreedomIntelligence/gamecraft-bench"},
     {"name": "MicroVerse", "repo": "FreedomIntelligence/MicroVerse"},
     {"name": "MedGen", "repo": "FreedomIntelligence/MedGen"},
     {"name": "Med-MAT", "repo": "FreedomIntelligence/Med-MAT"},
-    {"name": "ManipLLM", "repo": "clorislili/ManipLLM"},
     {"name": "awesome-LLM-resources", "repo": "WangRongsheng/awesome-LLM-resources"},
     {"name": "CareGPT", "repo": "WangRongsheng/CareGPT"},
     {"name": "XrayGLM", "repo": "WangRongsheng/XrayGLM"},

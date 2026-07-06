@@ -105,6 +105,25 @@ a.a1:hover { color:rgb(95, 23, 110);
   gap: 4px;
 }
 
+.contact-links .email-link {
+  gap: 6px;
+  max-width: 100%;
+}
+
+.contact-sub {
+  display: inline-block;
+  max-width: 230px;
+  color: #8a6a3f;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.82;
+  letter-spacing: 0;
+}
+
 .contact-links svg {
   width: 14px;
   height: 14px;
@@ -700,6 +719,11 @@ span.highlight {
 
 .mountain-template {
   margin-top: 8px;
+}
+
+.mountain-updated {
+  margin-top: 6px;
+  color: rgba(255,255,255,0.78);
 }
 
 .mountain-template img {

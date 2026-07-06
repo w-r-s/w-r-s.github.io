@@ -64,12 +64,12 @@
 
               <p class="contact-links">
                 <span class="contact-line">
-                <a href="mailto:rongshengwang@link.cuhk.edu.cn" id="email-copy" title="Click to copy email">
+                <a href="mailto:rongshengwang@link.cuhk.edu.cn" id="email-copy" class="email-link" title="Click to copy email">
                   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="5" width="18" height="14" rx="2"></rect>
                     <path d="m3 7 9 6 9-6"></path>
                   </svg>
-                  Email
+                  Email: <span class="contact-sub">rongshengwang@link.cuhk.edu.cn</span>
                 </a> &nbsp/&nbsp
                 <a href="assets/cv/Rongsheng_Resume.pdf" target="_blank" rel="noopener">
                   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -376,7 +376,7 @@
                   <img src='images/roboverse.png' width="190"></div>
                     <br>
                   <img src='images/roboverse.png' width="190">
-                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/RoboVerseOrg/RoboVerse?style=flat-square&color=yellow&label=stars&logo=GitHub"> 
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/endpoint?url=https://w-r-s.github.io/assets/project_stars_badges/RoboVerseOrg__RoboVerse.json">
               </div>
               <script type="text/javascript">
                 function malle_start() {
@@ -429,7 +429,7 @@
                   <img src='images/paper/gamecraft-bench.png' width="190"></div>
                   <br>
                   <img src='images/paper/gamecraft-bench.png' width="190">
-                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/gamecraft-bench?style=flat-square&color=yellow&label=stars&logo=GitHub">
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/endpoint?url=https://w-r-s.github.io/assets/project_stars_badges/FreedomIntelligence__gamecraft-bench.json">
                 </div>
               <script type="text/javascript">
                 function gamecraft_start() {
@@ -489,7 +489,7 @@
                   <img src='images/paper/microverse.png' width="160"></div>
                   <br>
                   <img src='images/paper/microverse.png' width="160">
-                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/MicroVerse?style=flat-square&color=yellow&label=stars&logo=GitHub"> 
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/endpoint?url=https://w-r-s.github.io/assets/project_stars_badges/FreedomIntelligence__MicroVerse.json">
                 </div>
               <script type="text/javascript">
                 function malle_start() {
@@ -539,7 +539,7 @@
                   <img src='images/paper/medgen.png' width="160"></div>
                   <br>
                   <img src='images/paper/medgen.png' width="160">
-                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/MedGen?style=flat-square&color=yellow&label=stars&logo=GitHub"> 
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/endpoint?url=https://w-r-s.github.io/assets/project_stars_badges/FreedomIntelligence__MedGen.json">
                 </div>
               <script type="text/javascript">
                 function malle_start() {
@@ -586,7 +586,7 @@
                   <img src='images/paper/med-mat.png' width="190"></div>
                   <br>
                   <img src='images/paper/med-mat.png' width="190">
-                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/Med-MAT?style=flat-square&color=yellow&label=stars&logo=GitHub"> 
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/endpoint?url=https://w-r-s.github.io/assets/project_stars_badges/FreedomIntelligence__Med-MAT.json">
                 </div>
               <script type="text/javascript">
                 function malle_start() {
@@ -635,7 +635,7 @@
                   <img src='images/ManipLLM.png' width="190"></div>
                   <br>
                   <img src='images/ManipLLM.png' width="190">
-                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/clorislili/ManipLLM?style=flat-square&color=yellow&label=stars&logo=GitHub"> 
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/endpoint?url=https://w-r-s.github.io/assets/project_stars_badges/clorislili__ManipLLM.json">
 
                 </div>
               <script type="text/javascript">
@@ -916,7 +916,27 @@
                     setVisible(true);
                 }
 
-                initTagCloud(myProjects);
+                function loadProjects() {
+                    if (!window.fetch) {
+                        initTagCloud(myProjects);
+                        return;
+                    }
+
+                    fetch('assets/project_stars.json', { cache: 'no-store' })
+                        .then(response => {
+                            if (!response.ok) throw new Error('Project stars data unavailable');
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (!data.projects || !Array.isArray(data.projects)) throw new Error('Invalid project stars data');
+                            initTagCloud(data.projects);
+                        })
+                        .catch(() => {
+                            initTagCloud(myProjects);
+                        });
+                }
+
+                loadProjects();
             })();
         </script>
 
@@ -1103,6 +1123,7 @@
         </a>
         <p class="mountain-footnote">
           <span>Rongsheng Wang | 王荣胜</span>
+          <span class="mountain-updated">Last updated: <!-- LAST_UPDATED_START -->June 30, 2026<!-- LAST_UPDATED_END -->.</span>
           <span class="mountain-template">
             <a href="https://github.com/WangRongsheng"><img class="lazy-footer-badge" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="https://visitor-badge.laobi.icu/badge?page_id=https://github.com/WangRongsheng" alt="visitor badge" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="66" height="20"></a>
             If you like it, feel free to steal <a href="https://github.com/w-r-s/w-r-s.github.io">this template</a>.

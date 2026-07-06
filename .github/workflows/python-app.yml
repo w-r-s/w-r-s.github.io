@@ -5,8 +5,11 @@ permissions:
   contents: write
 
 on:
+  push:
+    branches:
+      - main
   schedule:
-    - cron: '0 6 * * 1'  # 每周一 06:00
+    - cron: '0 6 * * *'  # 每天 06:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -27,16 +30,23 @@ jobs:
         pip3 install -r ./assets/requirements.txt
 
     - name: Run update script (with 70s overall timeout)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # 防止脚本因为内部卡死导致整个 CI 超时
         timeout 70s python3 ./assets/get_scholar_github.py || echo "脚本超时，继续执行"
+
+    - name: Update homepage timestamp
+      run: |
+        updated_at="$(TZ=Asia/Shanghai date '+%B %-d, %Y')"
+        sed -i -E "s#<!-- LAST_UPDATED_START -->.*<!-- LAST_UPDATED_END -->#<!-- LAST_UPDATED_START -->${updated_at}<!-- LAST_UPDATED_END -->#" index.html
 
     - name: Commit and Push changes
       run: |
         git config --global user.email "wrs6@88.com"
         git config --global user.name "w-r-s"
 
-        git add ./assets
+        git add ./assets index.html
         git commit -m "* update $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
 
         # 使用 GitHub Token 推送（避免 403 权限错误）

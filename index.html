@@ -26,7 +26,17 @@
   </style>
 </head>
 <body>
-  <table style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+  <nav class="section-drip-nav" aria-label="Section navigation">
+    <a href="#about" aria-label="About"><span>About</span></a>
+    <a href="#news" aria-label="News"><span>News</span></a>
+    <a href="#publications" aria-label="Publications"><span>Publications</span></a>
+    <a href="#experience" aria-label="Experience"><span>Experience</span></a>
+    <a href="#projects" aria-label="Projects"><span>Projects</span></a>
+    <a href="#service" aria-label="Service"><span>Service</span></a>
+    <a href="#awards" aria-label="Awards"><span>Awards</span></a>
+  </nav>
+
+  <table id="about" class="page-section" style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
     <tr style="padding:0px">
       <td style="padding:0px">
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
@@ -127,7 +137,7 @@
           <tr>
             <br>
               <heading>News</heading>
-            <br><br>
+            <br>
             <td style="padding:0px;width:100%;vertical-align:middle">
               <ul class="news-list" id="newsList">
                 <li class="news-item">
@@ -188,7 +198,7 @@
           </tr>
         </tbody></table> -->
 		  
-		<table style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+		<table id="news" class="page-section" style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           <tr>
             <br>
               <heading>News</heading>
@@ -210,7 +220,7 @@
           </tr>
         </tbody></table>
         
-		<table class="publications-table" style="width:100%;border:0px;border-spacing:0 16px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+		<table id="publications" class="publications-table page-section" style="width:100%;border:0px;border-spacing:0 16px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <heading>Publications</heading>
     <br>
    <p>† Equal contribution. * Corresponding author. The leading papers are <span style="background-color: #FFFEE0;">highlighted</span>.</p>
@@ -228,21 +238,23 @@
             .tag-btn {
               padding: 5px 14px;
               border-radius: 20px;
-              border: 1px solid #cbd5e0;
-              background: #fafafa;
-              color: #4a5568;
+              border: 1px solid rgba(17, 17, 17, 0.18);
+              background: rgba(251, 165, 36, 0.06);
+              color: #6e3519;
               font-size: 13px;
               cursor: pointer;
               transition: all 0.2s;
             }
             .tag-btn:hover {
-              border-color: #667eea;
-              color: #667eea;
+              border-color: rgba(17, 17, 17, 0.36);
+              background: rgba(251, 165, 36, 0.1);
+              color: #6e3519;
             }
             .tag-btn.active {
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              color: white;
-              border-color: transparent;
+              background: #ad7020;
+              color: #fff;
+              border-color: rgba(17, 17, 17, 0.62);
+              box-shadow: 0 2px 8px rgba(173, 112, 32, 0.22);
             }
             .tag-count {
               display: inline-block;
@@ -258,9 +270,13 @@
               margin-left: 5px;
               vertical-align: middle;
             }
+            .tag-btn.active .tag-count {
+              background: rgba(255, 255, 255, 0.22);
+              color: #fff;
+            }
             .tag-btn:not(.active) .tag-count {
-              background: #e2e8f0;
-              color: #4a5568;
+              background: rgba(251, 165, 36, 0.14);
+              color: #6e3519;
             }
             .publications-table tr[data-tags] > td {
               border-top: 1px solid rgba(0, 0, 0, 0.14);
@@ -282,9 +298,9 @@
             /* 自定义复制提示框样式 */
             .toast-message {
               position: fixed;
-              top: 20px;
-              left: 50%;
-              transform: translateX(-50%);
+              top: var(--toast-y, 20px);
+              left: var(--toast-x, 50%);
+              transform: translate(-50%, -120%);
               background: rgba(255, 255, 255, 0.8);
               color: #333;
               padding: 8px 16px;
@@ -298,7 +314,7 @@
             }
             .toast-message.show {
               opacity: 1;
-              top: 30px;
+              transform: translate(-50%, -135%);
             }
           </style>
           
@@ -334,9 +350,16 @@
               });
             });
 
-            function copyText(text) {
+            function copyText(text, event) {
               const showToast = () => {
                 const toast = document.getElementById('toast');
+                if (event) {
+                  const margin = 12;
+                  const x = Math.min(Math.max(event.clientX, margin), window.innerWidth - margin);
+                  const y = Math.min(Math.max(event.clientY, 48), window.innerHeight - margin);
+                  toast.style.setProperty('--toast-x', x + 'px');
+                  toast.style.setProperty('--toast-y', y + 'px');
+                }
                 toast.classList.add('show');
                 setTimeout(() => {
                   toast.classList.remove('show');
@@ -363,14 +386,14 @@
             }
 
             // 复制简介功能
-            document.getElementById('astronaut-btn').addEventListener('click', function() {
+            document.getElementById('astronaut-btn').addEventListener('click', function(e) {
               const text = "王荣胜，香港中文大学（深圳）一年级在读博士研究生，导师为王本友教授。研究方向聚焦于医疗多模态大模型与多模态生成。GitHub 累计获得 12,700+ Stars，参与贡献的项目累计 60,000+ Stars。以第一作者/主要作者身份发表 ACL、ICLR 论文，谷歌学术引用次数超过 500 次。曾获 Kaggle AI 奥林匹克数学竞赛AIMO-2金牌。";
-              copyText(text);
+              copyText(text, e);
             });
 
             document.getElementById('email-copy').addEventListener('click', function(e) {
               e.preventDefault();
-              copyText('rongshengwang@link.cuhk.edu.cn');
+              copyText('rongshengwang@link.cuhk.edu.cn', e);
             });
             
           </script>
@@ -636,7 +659,7 @@
     
         </tbody></table>
 
-        <table width="100%" align="center" border="0" cellpadding="10"><tbody>
+        <table id="experience" class="page-section" width="100%" align="center" border="0" cellpadding="10"><tbody>
           <br>
               <heading>Experience</heading>
           <br>
@@ -672,7 +695,7 @@
           </tr> -->
         </tbody></table>
 
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+        <table id="projects" class="page-section" style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
             <tr>
               <br>
               <heading>Projects</heading>
@@ -893,7 +916,7 @@
             })();
         </script>
 
-        <table style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+        <table id="service" class="page-section" style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           <tr>
             <br>
             <heading>Service and Teaching</heading>
@@ -975,7 +998,7 @@
           </tr>
         </tbody></table> -->
 
-        <table style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+        <table id="awards" class="page-section" style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
               <tr>
                 <br>
                 <heading>Awards and Honors</heading>
@@ -1190,13 +1213,26 @@
     // Back to Top
     (function() {
       var btn = document.getElementById('backToTop');
+      var sectionNav = document.querySelector('.section-drip-nav');
+      var footer = document.querySelector('.mountain-footer');
+
+      function updateSectionNav() {
+        if (!sectionNav || !footer) return;
+        var footerTop = footer.getBoundingClientRect().top;
+        var navBottom = sectionNav.getBoundingClientRect().bottom;
+        sectionNav.classList.toggle('is-footer-visible', footerTop < navBottom + 28);
+      }
+
       window.addEventListener('scroll', function() {
         if (window.scrollY > 300) {
           btn.classList.add('visible');
         } else {
           btn.classList.remove('visible');
         }
+        updateSectionNav();
       });
+      window.addEventListener('resize', updateSectionNav);
+      updateSectionNav();
     })();
 
     function scrollToTop() {

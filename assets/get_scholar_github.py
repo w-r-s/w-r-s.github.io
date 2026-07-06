@@ -141,6 +141,7 @@ def get_project_stars(project_list):
             "color": "yellow",
             "logo": "github",
             "style": "flat-square",
+            "cacheSeconds": 3600,
         }))
 
     write_json_atomic('./assets/project_stars.json', {

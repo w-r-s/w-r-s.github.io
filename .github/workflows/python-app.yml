@@ -39,7 +39,9 @@ jobs:
     - name: Update homepage timestamp
       run: |
         updated_at="$(TZ=Asia/Shanghai date '+%B %-d, %Y')"
+        badge_cache="$(TZ=Asia/Shanghai date '+%Y%m%d')"
         sed -i -E "s#<!-- LAST_UPDATED_START -->.*<!-- LAST_UPDATED_END -->#<!-- LAST_UPDATED_START -->${updated_at}<!-- LAST_UPDATED_END -->#" index.html
+        sed -i -E "s#(&cacheSeconds=3600&v=)[0-9]{8}#\1${badge_cache}#g" index.html
 
     - name: Commit and Push changes
       run: |

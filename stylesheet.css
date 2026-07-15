@@ -347,6 +347,17 @@ heading {
   letter-spacing: 0.01em;
   white-space: nowrap;
 }
+.news-entry {
+  list-style: none;
+}
+.news-logo {
+  width: 16px;
+  height: 16px;
+  margin: 1px 6px 0 0;
+  color: transparent;
+  vertical-align: -3px;
+  flex-shrink: 0;
+}
 .news-text {
   font-size: 14px;
   color: #333;

@@ -198,22 +198,21 @@
           </tr>
         </tbody></table> -->
 		  
-		<table id="news" class="page-section" style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
-          <tr>
-            <br>
-              <heading>News</heading>
-            <br><br>
-            <td style="padding:0px;width:100%;vertical-align:middle">
-		  <P>
-                <li class="news-entry"><img alt="HLE Logo" loading="lazy" width="16" height="16" decoding="async" data-nimg="1" class="news-logo mt-1 flex-shrink-0" style="color:transparent" src="images/icon/hle_logo.svg"><span class="news-date-badge">Jan. 2026</span> One paper accepted by <span style="text-decoration: underline; text-decoration-color: #f3d008;">ICLR 2026</span>, congrats to all co-authors! See you at Brazil!
+			<table id="news" class="page-section" style="width:96%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+	          <tr>
+	              <heading>News</heading>
+	            <br>
+	            <td style="padding:0px;width:100%;vertical-align:middle">
+			  <P class="news-first-entry">
+                <li class="news-entry"><span class="news-date-badge">Jan. 2026</span> One paper accepted by <span class="news-highlight">ICLR 2026</span>, congrats to all co-authors! See you at Brazil!
                 </li>
               </P>
 			  <P>
-                <li class="news-entry"><img alt="HLE Logo" loading="lazy" width="16" height="16" decoding="async" data-nimg="1" class="news-logo mt-1 flex-shrink-0" style="color:transparent" src="images/icon/hle_logo.svg"><span class="news-date-badge">May 2025</span> Two papers accepted by <span style="text-decoration: underline; text-decoration-color: #f3d008;">ACL 2025</span>, congrats to all co-authors!
+                <li class="news-entry"><span class="news-date-badge">May 2025</span> Two papers accepted by <span class="news-highlight">ACL 2025</span>, congrats to all co-authors!
                 </li>
               </P>
               <P>
-                <li class="news-entry"><img alt="HLE Logo" loading="lazy" width="16" height="16" decoding="async" data-nimg="1" class="news-logo mt-1 flex-shrink-0" style="color:transparent" src="images/icon/hle_logo.svg"><span class="news-date-badge">Apr. 2025</span> Our team won the <span style="text-decoration: underline; text-decoration-color: #f3d008;">gold medal</span> in the AIMO-2 competition, ranking 14th out of 2213!
+                <li class="news-entry"><span class="news-date-badge">Apr. 2025</span> Our team won the <span class="news-highlight">gold medal</span> in the AIMO-2 competition, ranking 14th out of 2213!
                 </li>
               </P>
             </td>
@@ -320,9 +319,10 @@
           
           <div class="tag-filter" id="tagFilter">
             <button class="tag-btn active" data-tag="all">All</button>
-            <button class="tag-btn" data-tag="multimodal-gen">Generation</button>
-            <button class="tag-btn" data-tag="mllm">Multimodal</button>
-            <button class="tag-btn" data-tag="world-model">World Model</button>
+	            <button class="tag-btn" data-tag="multimodal-gen">Generation</button>
+	            <button class="tag-btn" data-tag="mllm">Multimodal</button>
+	            <button class="tag-btn" data-tag="medical">Medical</button>
+	            <button class="tag-btn" data-tag="world-model">World Model</button>
             <button class="tag-btn" data-tag="benchmark">Benchmark</button>
           </div>
 
@@ -398,7 +398,72 @@
             
           </script>
 
-          <tr data-tags="benchmark">
+	          <tr data-tags="medical">
+	            <td style="padding:20px;width:30%;vertical-align:middle">
+	              <div class="one">
+	                <div class="two" id="rarelens_image">
+	                  <br>
+	                  <img src="images/paper/rarelens.png" width="190" alt="RareLens clinical workflow">
+	                </div>
+	                <br>
+	                <img src="images/paper/rarelens.png" width="190" alt="RareLens clinical workflow">
+	                <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/geteff1/RareLens?style=flat-square&color=yellow&label=stars&logo=GitHub">
+	              </div>
+	              <script type="text/javascript">
+	                function rarelens_start() {
+	                  document.getElementById('rarelens_image').style.opacity = "1";
+	                }
+	                function rarelens_stop() {
+	                  document.getElementById('rarelens_image').style.opacity = "0";
+	                }
+	                rarelens_stop()
+	              </script>
+	            </td>
+	            <td style="padding:20px;width:70%;vertical-align:middle">
+	              <papertitle>RareLens: Towards End-to-End Rare Disease Care via Aligning Divergent Large Language Model Reasoning</papertitle>
+	              <br>
+	              <a:focus>Xi Chen</a:focus>,
+	              <a:focus>Hongru Zhou</a:focus>,
+	              <a:focus>Shiyu Feng</a:focus>,
+	              <a:focus>Hanyu Zhou</a:focus>,
+	              <a:focus>Huahui Yi</a:focus>,
+	              <a:focus><strong>Rongsheng Wang</strong></a:focus>,
+	              <a:focus>Tiancheng He</a:focus>,
+	              <a:focus>Kun Wang</a:focus>,
+	              <a:focus>Pingping Liu</a:focus>,
+	              <a:focus>Qiankun Li</a:focus>,
+	              <a:focus>Sicheng Lin</a:focus>,
+	              <a:focus>Huiying Ou</a:focus>,
+	              <a:focus>Xiaohong Zheng</a:focus>,
+	              <a:focus>Tianying Zang</a:focus>,
+	              <a:focus>Zhuohang Wu</a:focus>,
+	              <a:focus>Leheng Jiang</a:focus>,
+	              <a:focus>Kexin Cao</a:focus>,
+	              <a:focus>Wenhan Zhang</a:focus>,
+	              <a:focus>ChengYi Li</a:focus>,
+	              <a:focus>Zhiyang Wang</a:focus>,
+	              <a:focus>Songlin Li</a:focus>,
+	              <a:focus>Benyou Wang</a:focus>,
+	              <a:focus>Ningbei Yin</a:focus>,
+	              <a:focus>Shaoting Zhang</a:focus>,
+	              <a:focus>Weili Fu*</a:focus>,
+	              <a:focus>Jian Li*</a:focus>,
+	              <a:focus>Kang Li*</a:focus>
+	              <br>
+	              <a href="http://rarelens.org/">Homepage</a>
+	              /
+	              <a href="https://eval.rarelens.org/">Human Evaluation</a>
+	              /
+	              <a href="https://github.com/geteff1/RareLens">Code</a>
+	              <br>
+	              <em><strong>Under Review</strong></em>
+	              <p></p>
+	              <p>
+	              RareLens provides trustworthy, actionable decision support across the full rare-disease care pathway, from early risk screening and diagnosis to treatment, efficacy evaluation, and prognosis.
+	            </td>
+	          </tr>
+
+	          <tr data-tags="benchmark">
             <td style="padding:20px;width:30%;vertical-align:middle">
               <div class="one">
                 <div class="two" id='gamecraft_image'>
@@ -508,7 +573,7 @@
               </td>
           </tr>
                     
-          <tr style="background-color: lightyellow;" data-tags="multimodal-gen">
+	          <tr style="background-color: lightyellow;" data-tags="multimodal-gen,medical">
             <td style="padding:20px;width:30%;vertical-align:middle">
               <div class="one">
                 <div class="two" id='malle_image'>
@@ -555,7 +620,7 @@
               </td>
           </tr>
 
-          <tr data-tags="mllm">
+	          <tr data-tags="mllm,medical">
             <td style="padding:20px;width:30%;vertical-align:middle">
               <div class="one">
                 <div class="two" id='malle_image'>
@@ -655,11 +720,89 @@
             </td>
           </tr> -->
 
-          
-    
-        </tbody></table>
 
-        <table id="experience" class="page-section" width="100%" align="center" border="0" cellpadding="10"><tbody>
+
+	        </tbody></table>
+	        <script>
+	          (function() {
+	            var rows = document.querySelectorAll('.publications-table tr[data-tags]');
+
+	            rows.forEach(function(row, index) {
+	              var title = row.querySelector('papertitle');
+	              if (!title) return;
+
+	              var titleContainer = title.closest('a') || title;
+	              var firstBreak = titleContainer.nextElementSibling;
+	              if (!firstBreak || firstBreak.tagName !== 'BR') return;
+
+	              var lastBreak = firstBreak.nextElementSibling;
+	              while (lastBreak && lastBreak.tagName !== 'BR') {
+	                lastBreak = lastBreak.nextElementSibling;
+	              }
+	              if (!lastBreak) return;
+
+	              var authorNodes = [];
+	              var node = firstBreak.nextSibling;
+	              while (node && node !== lastBreak) {
+	                authorNodes.push(node);
+	                node = node.nextSibling;
+	              }
+
+	              var shell = document.createElement('div');
+	              shell.className = 'publication-authors-shell';
+	              var authors = document.createElement('div');
+	              authors.className = 'publication-authors';
+	              authors.id = 'publication-authors-' + index;
+	              authorNodes.forEach(function(authorNode) {
+	                authors.appendChild(authorNode);
+	              });
+
+	              var toggle = document.createElement('button');
+	              toggle.type = 'button';
+	              toggle.className = 'publication-authors-toggle';
+	              toggle.textContent = '▶';
+	              toggle.setAttribute('aria-controls', authors.id);
+	              toggle.setAttribute('aria-expanded', 'false');
+	              toggle.setAttribute('aria-label', 'Expand author list');
+	              toggle.title = 'Expand author list';
+
+	              shell.appendChild(authors);
+	              shell.appendChild(toggle);
+	              firstBreak.parentNode.insertBefore(shell, firstBreak);
+	              firstBreak.remove();
+	              lastBreak.remove();
+
+	              toggle.addEventListener('click', function() {
+	                var expanded = shell.classList.toggle('expanded');
+	                toggle.textContent = expanded ? '▼' : '▶';
+	                toggle.setAttribute('aria-expanded', String(expanded));
+	                toggle.setAttribute('aria-label', expanded ? 'Collapse author list' : 'Expand author list');
+	                toggle.title = expanded ? 'Collapse author list' : 'Expand author list';
+	              });
+	            });
+
+	            function updateAuthorToggles() {
+	              document.querySelectorAll('.publication-authors-shell').forEach(function(shell) {
+	                var authors = shell.querySelector('.publication-authors');
+	                var toggle = shell.querySelector('.publication-authors-toggle');
+	                var wasExpanded = shell.classList.contains('expanded');
+	                if (wasExpanded) shell.classList.remove('expanded');
+	                var hasOverflow = authors.scrollHeight > authors.clientHeight + 1;
+	                if (wasExpanded) shell.classList.add('expanded');
+	                toggle.hidden = !hasOverflow;
+	              });
+	            }
+
+	            updateAuthorToggles();
+	            var resizeFrame;
+	            window.addEventListener('resize', function() {
+	              cancelAnimationFrame(resizeFrame);
+	              resizeFrame = requestAnimationFrame(updateAuthorToggles);
+	            }, { passive: true });
+	          })();
+	        </script>
+
+	        <table id="experience" class="page-section" width="100%" align="center" border="0" cellpadding="10"><tbody>
           <br>
               <heading>Experience</heading>
           <br>
@@ -1068,7 +1211,7 @@
 
   <div id="toast" class="toast-message">✅复制完成</div>
 
-  <div id="cursor-glow" aria-hidden="true"></div>
+  <!-- <div id="cursor-glow" aria-hidden="true"></div> -->
 
   <!-- PDF Modal Overlay -->
   <style>
@@ -1278,6 +1421,7 @@
     })();
   </script>
   <script>
+    /* Cursor glow and pooled ripples are currently disabled.
     // Cursor glow and pooled ripples
     (function() {
       var glow = document.getElementById('cursor-glow');
@@ -1356,6 +1500,7 @@
       document.addEventListener('mouseleave', function() { glow.style.opacity = '0'; });
       document.addEventListener('mouseenter', function() { glow.style.opacity = '1'; });
     })();
+    */
   </script>
 </body>
 <!-- <footer>

@@ -337,8 +337,8 @@ heading {
   display: inline-block;
   margin-right: 5px;
   padding: 0 5px 1px;
-  border: 1px solid rgba(251, 165, 36, 0.28);
-  border-radius: 4px;
+  border: 1px solid #555;
+  border-radius: 2px;
   background: linear-gradient(135deg, rgba(251, 165, 36, 0.1), rgba(243, 208, 8, 0.08));
   color: #111;
   font-size: 11px;
@@ -349,14 +349,22 @@ heading {
 }
 .news-entry {
   list-style: none;
+  line-height: 1.35;
 }
-.news-logo {
-  width: 16px;
-  height: 16px;
-  margin: 1px 6px 0 0;
-  color: transparent;
-  vertical-align: -3px;
-  flex-shrink: 0;
+#news p {
+  margin: 3px 0;
+}
+#news p.news-first-entry {
+  margin-top: 1em;
+}
+#news {
+  margin-bottom: 24px;
+}
+.news-highlight {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  -webkit-text-decoration-color: #ad7020;
+  text-decoration-color: #fba524;
 }
 .news-text {
   font-size: 14px;
@@ -403,6 +411,42 @@ papertitle {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
   font-size: 14px;
   font-weight: 700
+}
+
+.publication-authors-shell {
+  position: relative;
+  padding-right: 24px;
+  line-height: 1.5;
+}
+
+.publication-authors-shell:not(.expanded) .publication-authors {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+}
+
+.publication-authors-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #6e3519;
+  font-size: 11px;
+  line-height: 22px;
+  text-align: center;
+  cursor: url('images/icon/cursor-pointer.png'), pointer;
+}
+
+.publication-authors-toggle:hover,
+.publication-authors-toggle:focus-visible {
+  color: #f49300;
+  outline: none;
 }
 
 name {
@@ -873,7 +917,7 @@ span.highlight {
   50% { opacity:0.78; box-shadow:0 6px 22px rgba(20,40,70,0.22), 0 2px 6px rgba(20,40,70,0.15), 0 0 0 12px rgba(255,255,255,0); }
 }
 
-/* Cursor glow + ripples */
+/* Cursor glow + ripples (disabled)
 #cursor-glow {
   position: fixed;
   top: 0;
@@ -915,6 +959,7 @@ span.highlight {
   0% { opacity: 0.45; transform: translate3d(var(--x), var(--y), 0) scale(0.3); }
   100% { opacity: 0; transform: translate3d(var(--x), var(--y), 0) scale(2.3); }
 }
+*/
 
 @media (max-width: 1500px), (max-height: 560px) {
   .section-drip-nav {
@@ -938,10 +983,12 @@ span.highlight {
 }
 
 @media (hover: none), (prefers-reduced-motion: reduce) {
+  /* Cursor effects are currently disabled.
   #cursor-glow,
   .cursor-ripple {
     display: none;
   }
+  */
 
   .mountain-cta {
     animation: none;

@@ -527,6 +527,54 @@ papertitle {
   font-weight: 700
 }
 
+.publication-wide-figure {
+  width: 100%;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.publication-wide-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.publication-link-pending,
+.publication-link-pending:hover,
+.publication-link-pending:focus {
+  color: #9a7b4f;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.publication-toggle-row td {
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 8px;
+  background: rgba(251, 165, 36, 0.06);
+  text-align: center;
+}
+
+.publication-list-toggle {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #222;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 14px 20px;
+}
+
+.publication-list-toggle:hover,
+.publication-list-toggle:focus-visible {
+  color: #000;
+  background: rgba(251, 165, 36, 0.1);
+  text-decoration: underline;
+  outline: none;
+}
+
 .publication-authors-shell {
   position: relative;
   padding-right: 24px;

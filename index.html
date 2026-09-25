@@ -61,7 +61,7 @@
 				I like collaborating with
 				<a href="https://github.com/anthropics/claude-code">
 				  <img src="images/icon/claudecode.png" alt="Claude Code icon" style="height:16px; vertical-align:middle;">
-				  Claude Code
+				  <del>Claude Code</del>
 				</a>
 				and
 				<a href="https://github.com/openai/codex">
@@ -143,8 +143,15 @@
                 <li class="news-item">
                   <span class="news-dot"></span>
                   <div class="news-body">
+                    <span class="news-date">Sep. 2026</span>
+                    <span class="news-text">Two papers accepted by <span class="venue">NeurIPS 2026</span>, congrats to all co-authors! See you in Sydney!</span>
+                  </div>
+                </li>
+                <li class="news-item">
+                  <span class="news-dot"></span>
+                  <div class="news-body">
                     <span class="news-date">Jan. 2026</span>
-                    <span class="news-text">One paper accepted by <span class="venue">ICLR 2026</span>, congrats to all co-authors! See you at Brazil!</span>
+                    <span class="news-text">One paper accepted by <span class="venue">ICLR 2026</span>, congrats to all co-authors! See you in Brazil!</span>
                   </div>
                 </li>
                 <li class="news-item">
@@ -166,7 +173,10 @@
 			  <table style="width:90%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
               <td style="padding:0px;width:100%;vertical-align:middle">
                 <p>
-                  <li>[Jan. 2026] One paper accepted by <strong><u>ICLR 2026</u></strong>, congrats to all co-authors! See you at Brazil!</li>
+                  <li>[Sep. 2026] Two papers accepted by <strong><u>NeurIPS 2026</u></strong>, congrats to all co-authors! See you in Sydney!</li>
+                </p>
+                <p>
+                  <li>[Jan. 2026] One paper accepted by <strong><u>ICLR 2026</u></strong>, congrats to all co-authors! See you in Brazil!</li>
                 </p>
 				<p>
                   <li>[May 2025] Two papers accepted by <strong><u>ACL 2025</u></strong>, congrats to all co-authors!</li>
@@ -204,7 +214,11 @@
 	            <br>
 	            <td style="padding:0px;width:100%;vertical-align:middle">
 			  <P class="news-first-entry">
-                <li class="news-entry"><span class="news-date-badge">Jan. 2026</span> One paper accepted by <span class="news-highlight">ICLR 2026</span>, congrats to all co-authors! See you at Brazil!
+                <li class="news-entry"><span class="news-date-badge">Sep. 2026</span> Two papers accepted by <span class="news-highlight">NeurIPS 2026</span>, congrats to all co-authors! See you in Sydney!
+                </li>
+              </P>
+			  <P>
+                <li class="news-entry"><span class="news-date-badge">Jan. 2026</span> One paper accepted by <span class="news-highlight">ICLR 2026</span>, congrats to all co-authors! See you in Brazil!
                 </li>
               </P>
 			  <P>
@@ -327,27 +341,61 @@
           </div>
 
           <script>
-            // Inject counts into tag buttons (after full DOM is parsed)
             document.addEventListener('DOMContentLoaded', function() {
-              const rows = document.querySelectorAll('tr[data-tags]');
-              const total = rows.length;
+              const rows = Array.from(document.querySelectorAll('tr[data-tags]'));
+              const filter = document.getElementById('tagFilter');
+              const toggleRow = document.getElementById('publicationToggleRow');
+              const toggle = document.getElementById('publicationToggle');
+              const maxVisible = 5;
+              let activeTag = 'all';
+              let expanded = false;
+
               document.querySelectorAll('.tag-btn').forEach(function(btn) {
                 const tag = btn.dataset.tag;
-                const count = tag === 'all' ? total : Array.from(rows).filter(r => r.dataset.tags.split(',').includes(tag)).length;
+                const count = tag === 'all' ? rows.length : rows.filter(function(row) {
+                  return row.dataset.tags.split(',').includes(tag);
+                }).length;
                 btn.insertAdjacentHTML('beforeend', '<span class="tag-count">' + count + '</span>');
               });
-            });
 
-            // Tag filter
-            document.getElementById('tagFilter').addEventListener('click', function(e) {
-              const btn = e.target.closest('.tag-btn');
-              if (!btn) return;
-              document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
-              btn.classList.add('active');
-              const tag = btn.dataset.tag;
-              document.querySelectorAll('tr[data-tags]').forEach(function(row) {
-                row.style.display = (tag === 'all' || row.dataset.tags.split(',').includes(tag)) ? '' : 'none';
+              function updatePublications() {
+                const matchingRows = rows.filter(function(row) {
+                  return activeTag === 'all' || row.dataset.tags.split(',').includes(activeTag);
+                });
+
+                rows.forEach(function(row) {
+                  row.style.display = 'none';
+                });
+                matchingRows.forEach(function(row, index) {
+                  if (expanded || index < maxVisible) row.style.display = '';
+                });
+
+                const hasMore = matchingRows.length > maxVisible;
+                toggleRow.style.display = hasMore ? '' : 'none';
+                toggle.textContent = expanded
+                  ? 'Show fewer publications'
+                  : 'Show ' + (matchingRows.length - maxVisible) + ' more publication' + (matchingRows.length - maxVisible === 1 ? '' : 's');
+                toggle.setAttribute('aria-expanded', String(expanded));
+              }
+
+              filter.addEventListener('click', function(e) {
+                const btn = e.target.closest('.tag-btn');
+                if (!btn) return;
+                document.querySelectorAll('.tag-btn').forEach(function(item) {
+                  item.classList.remove('active');
+                });
+                btn.classList.add('active');
+                activeTag = btn.dataset.tag;
+                expanded = false;
+                updatePublications();
               });
+
+              toggle.addEventListener('click', function() {
+                expanded = !expanded;
+                updatePublications();
+              });
+
+              updatePublications();
             });
 
             function copyText(text, event) {
@@ -387,7 +435,7 @@
 
             // 复制简介功能
             document.getElementById('astronaut-btn').addEventListener('click', function(e) {
-              const text = "王荣胜，香港中文大学（深圳）一年级在读博士研究生，导师为王本友教授。研究方向聚焦于医疗多模态大模型与多模态生成。GitHub 累计获得 12,700+ Stars，参与贡献的项目累计 60,000+ Stars。以第一作者/主要作者身份发表 ACL、ICLR 论文，谷歌学术引用次数超过 500 次。曾获 Kaggle AI 奥林匹克数学竞赛AIMO-2金牌。";
+              const text = "王荣胜，香港中文大学（深圳）二年级在读博士生，导师为王本友教授。研究方向聚焦于医疗多模态大模型与多模态生成。GitHub 累计获得 14,300+ Stars，参与贡献的项目累计 60,000+ Stars。以第一作者/主要作者身份发表 ACL、ICLR、NeurIPS 论文，谷歌学术引用次数超过 800 次。曾获 Kaggle AI 奥林匹克数学竞赛 AIMO-2 金牌。";
               copyText(text, e);
             });
 
@@ -397,6 +445,40 @@
             });
             
           </script>
+
+	          <tr style="background-color: lightyellow;" data-tags="multimodal-gen,medical">
+	            <td style="padding:20px;width:30%;vertical-align:middle">
+	              <div class="publication-wide-figure">
+	                <img src="images/paper/medigen.png" alt="MedIGen generate-reflect-refine framework and IlluGenBench evaluation pipeline">
+	              </div>
+	            </td>
+	            <td style="padding:20px;width:70%;vertical-align:middle">
+	              <papertitle>Reliable Medical Illustration Generation via Interleaved Introspective Reasoning</papertitle>
+	              <br>
+	              <a:focus><strong>Rongsheng Wang</strong></a:focus>,
+	              <a:focus>Hongru Zhou</a:focus>,
+	              <a:focus>Ruizhe Zhou</a:focus>,
+	              <a:focus>Haoming Chen*</a:focus>,
+	              <a:focus>Zhenyang Cai</a:focus>,
+	              <a:focus>Junying Chen</a:focus>,
+	              <a:focus>Minghao Wu</a:focus>,
+	              <a:focus>Yaofei Duan</a:focus>,
+	              <a:focus>Ziyi Zeng</a:focus>,
+	              <a:focus>Benyou Wang*</a:focus>
+	              <br>
+	              <a class="publication-link-pending" href="" aria-disabled="true" title="Coming soon" onclick="return false;">Code</a>
+	              /
+	              <a class="publication-link-pending" href="" aria-disabled="true" title="Coming soon" onclick="return false;">Paper</a>
+	              /
+	              <a class="publication-link-pending" href="" aria-disabled="true" title="Coming soon" onclick="return false;">Dataset</a>
+	              /
+	              <a class="publication-link-pending" href="" aria-disabled="true" title="Coming soon" onclick="return false;">Benchmark</a>
+	              <br>
+	              <span style="color: red;"><em><strong>NeurIPS 2026 (Poster)</strong></em></span>
+	              <p></p>
+	              <p>Medical illustrations support education, clinical communication, and scientific publishing, and MedIGen makes their generation more reliable through interleaved generate-reflect-refine reasoning.</p>
+	            </td>
+	          </tr>
 
 	          <tr data-tags="medical">
 	            <td style="padding:20px;width:30%;vertical-align:middle">
@@ -724,7 +806,11 @@
             </td>
           </tr> -->
 
-
+	          <tr class="publication-toggle-row" id="publicationToggleRow">
+	            <td colspan="2">
+	              <button class="publication-list-toggle" id="publicationToggle" type="button" aria-expanded="false"></button>
+	            </td>
+	          </tr>
 
 	        </tbody></table>
 	        <script>

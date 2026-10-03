@@ -1,3 +1,4 @@
+import argparse
 import json
 from datetime import datetime
 import os
@@ -26,9 +27,33 @@ def write_json_atomic(path, data):
 
 
 # =====================================================
-#  Google Scholar citation 抓取（无代理 + 超时自动跳过）
+#  Google Scholar citation update (SerpApi preferred, direct access fallback)
 # =====================================================
 def get_scholar():
+    serpapi_key = os.environ.get("SERPAPI_KEY")
+    if serpapi_key:
+        response = requests.get(
+            "https://serpapi.com/search.json",
+            params={
+                "engine": "google_scholar_author",
+                "author_id": "SSaBaioAAAAJ",
+                "api_key": serpapi_key,
+            },
+            timeout=30,
+        )
+        response.raise_for_status()
+        data = response.json()
+        table = data.get("cited_by", {}).get("table", [])
+        citations = table[0].get("citations", {}).get("all") if table else None
+        try:
+            citations = int(citations)
+        except (TypeError, ValueError) as exc:
+            raise RuntimeError("SerpApi response did not contain a citation count")
+        write_scholar_badge(citations)
+        print("Google Scholar data updated through SerpApi:", citations)
+        return
+
+    print("SERPAPI_KEY is not configured; falling back to direct Google Scholar access")
     from scholarly import scholarly
 
     # 设置整个 get_scholar 的超时时间（单位：秒）
@@ -36,37 +61,30 @@ def get_scholar():
     signal.alarm(60)
 
     try:
-        # 限制单次请求超时时间 / 重试次数，进一步避免卡死
         scholarly.set_timeout(10)
         scholarly.set_retries(1)
-
         author = scholarly.search_author_id("SSaBaioAAAAJ")
-        scholarly.fill(author, sections=['basics', 'indices', 'counts', 'publications'])
-
-        # Scholar 请求成功，关闭超时 alarm
+        scholarly.fill(author, sections=['basics', 'indices', 'counts'])
+    except TimeoutException as exc:
+        raise RuntimeError("Google Scholar request exceeded 60 seconds") from exc
+    finally:
         signal.alarm(0)
 
-    except TimeoutException:
-        print("Google Scholar 请求超过 60 秒，已跳过")
-        return
+    write_scholar_badge(author['citedby'])
+    print("Google Scholar data updated directly:", author['citedby'])
 
-    except Exception as e:
-        print("Google Scholar 请求失败，已跳过：", e)
-        return
 
-    # === 生成 shields.io JSON ===
-    author['updated'] = str(datetime.now())
-    author['publications'] = {v['author_pub_id']: v for v in author['publications']}
+def write_scholar_badge(citations):
+    if not isinstance(citations, int) or citations < 0:
+        raise ValueError(f"Invalid Google Scholar citation count: {citations!r}")
 
     shieldio_data = {
         "schemaVersion": 1,
         "label": "citations",
-        "message": f"{author['citedby']}",
+        "message": str(citations),
     }
 
     write_json_atomic('./assets/gs_data_shieldsio.json', shieldio_data)
-
-    print("Google Scholar 数据已更新：", author['citedby'])
 
 
 # =====================================================
@@ -83,12 +101,12 @@ def get_repo_stars(repo_full_name):
     try:
         resp = requests.get(url, headers=headers, timeout=12)
     except requests.RequestException as e:
-        print(f"获取失败：{repo_full_name}，请求异常：{e}")
-        return None
+        raise RuntimeError(f"GitHub request failed for {repo_full_name}: {e}") from e
 
     if resp.status_code != 200:
-        print(f"获取失败：{repo_full_name}，状态码：{resp.status_code}")
-        return None
+        raise RuntimeError(
+            f"GitHub request failed for {repo_full_name}: HTTP {resp.status_code}"
+        )
 
     data = resp.json()
     return data.get("stargazers_count", 0)
@@ -98,9 +116,6 @@ def get_github(repo_list):
     total = 0
     for repo in repo_list:
         stars = get_repo_stars(repo)
-        if stars is None:
-            print("GitHub stars 更新失败，保留旧 badge 数据")
-            return
         total += stars
 
     shieldio_data = {
@@ -124,10 +139,6 @@ def get_project_stars(project_list):
 
     for project in project_list:
         stars = get_repo_stars(project["repo"])
-        if stars is None:
-            print("Projects stars 更新失败，保留旧项目 stars 数据")
-            return
-
         projects.append({
             "name": project["name"],
             "repo": project["repo"],
@@ -195,13 +206,32 @@ project_repos = [
 
 
 # =====================================================
-#  主入口（Scholar 失败不会影响 Stars）
+#  Main entry point
 # =====================================================
 if __name__ == "__main__":
-    try:
-        get_scholar()
-    except Exception as e:
-        print("get_scholar() 出现未捕获异常，已忽略：", e)
+    parser = argparse.ArgumentParser(description="Update homepage citation and star data")
+    parser.add_argument(
+        "target",
+        nargs="?",
+        choices=("all", "scholar", "github"),
+        default="all",
+        help="data source to update (default: all)",
+    )
+    args = parser.parse_args()
 
-    get_github(repos)
-    get_project_stars(project_repos)
+    scholar_error = None
+    if args.target in ("all", "scholar"):
+        try:
+            get_scholar()
+        except Exception as exc:
+            if args.target == "scholar":
+                raise
+            scholar_error = exc
+            print("Google Scholar update failed; continuing with GitHub data:", exc)
+
+    if args.target in ("all", "github"):
+        get_github(repos)
+        get_project_stars(project_repos)
+
+    if scholar_error:
+        raise RuntimeError("Google Scholar update failed") from scholar_error

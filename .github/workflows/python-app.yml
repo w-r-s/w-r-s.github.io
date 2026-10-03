@@ -9,8 +9,12 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 6 * * *'  # 每天 06:00 UTC
+    - cron: '17 6 * * *'  # 每天 06:17 UTC，避开整点调度高峰
   workflow_dispatch:
+
+concurrency:
+  group: homepage-data-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -23,18 +27,30 @@ jobs:
         fetch-depth: 0
         clean: true
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y python3-setuptools
-        pip3 install -r ./assets/requirements.txt
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: pip
 
-    - name: Run update script (with 70s overall timeout)
+    - name: Install dependencies
+      run: python -m pip install -r ./assets/requirements.txt
+
+    - name: Update GitHub stars
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        # 防止脚本因为内部卡死导致整个 CI 超时
-        timeout 70s python3 ./assets/get_scholar_github.py || echo "脚本超时，继续执行"
+      run: timeout 180s python ./assets/get_scholar_github.py github
+
+    - name: Update Google Scholar citations
+      id: scholar
+      continue-on-error: true
+      env:
+        SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+      run: timeout 90s python ./assets/get_scholar_github.py scholar
+
+    - name: Report Google Scholar update failure
+      if: steps.scholar.outcome == 'failure'
+      run: echo "::warning title=Google Scholar update failed::The existing citation badge was preserved. Configure SERPAPI_KEY for reliable updates."
 
     - name: Update homepage timestamp
       run: |
@@ -51,5 +67,5 @@ jobs:
         git add ./assets index.html
         git commit -m "* update $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
 
-        # 使用 GitHub Token 推送（避免 403 权限错误）
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/w-r-s/w-r-s.github.io.git
+        git pull --rebase origin main
+        git push origin HEAD:main

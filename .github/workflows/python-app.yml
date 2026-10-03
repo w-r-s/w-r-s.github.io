@@ -9,7 +9,8 @@ on:
     branches:
       - main
   schedule:
-    - cron: '17 6 * * *'  # 每天 06:17 UTC，避开整点调度高峰
+    - cron: '17 6 * * 0,2-6'  # Stars：周二至周日 06:17 UTC
+    - cron: '43 6 * * 1'      # Stars + Scholar：每周一 06:43 UTC
   workflow_dispatch:
 
 concurrency:
@@ -43,6 +44,7 @@ jobs:
 
     - name: Update Google Scholar citations
       id: scholar
+      if: github.event_name == 'workflow_dispatch' || github.event.schedule == '43 6 * * 1'
       continue-on-error: true
       env:
         SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}

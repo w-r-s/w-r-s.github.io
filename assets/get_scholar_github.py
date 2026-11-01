@@ -189,6 +189,7 @@ repos = [
 ]
 
 project_repos = [
+    {"name": "BodyVista", "repo": "FreedomIntelligence/BodyVista"},
     {"name": "GameCraft-Bench", "repo": "FreedomIntelligence/gamecraft-bench"},
     {"name": "MicroVerse", "repo": "FreedomIntelligence/MicroVerse"},
     {"name": "MedGen", "repo": "FreedomIntelligence/MedGen"},

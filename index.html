@@ -5,7 +5,7 @@
   <meta name="author" content="Rongsheng Wang">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="KwnDO6gcnt9agiOnp3rY5b_Ql2eVrSbh1ypz6wyczYQ" />
-  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="stylesheet.css?v=20261115-1">
   <link rel="icon" type="image/png" href="images/my/wrs_icon.png">
   <script>
     var _hmt = _hmt || [];
@@ -218,7 +218,7 @@
                 </li>
               </P>
 			  <P>
-                <li class="news-entry"><span class="news-date-badge">Sep. 2026</span> Joined <span class="news-highlight">Baichuan Inc.</span> as a post-training intern, contributing to the next-generation models.
+                <li class="news-entry"><span class="news-date-badge">Sep. 2026</span> Joined <span class="news-highlight">Baichuan Inc.</span> as a research intern, focusing on post-training for next-generation models.
                 </li>
               </P>
 			  <P>
@@ -237,7 +237,7 @@
           </tr>
         </tbody></table>
         
-		<table id="publications" class="publications-table page-section" style="width:100%;border:0px;border-spacing:0 16px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+		<table id="publications" class="publications-table page-section" style="width:100%;border:0px;border-spacing:0 10px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <heading>Publications</heading>
     <br>
    <p>† Equal contribution. * Corresponding author. The leading papers are <span style="background-color: #FFFEE0;">highlighted</span>.</p>
@@ -299,14 +299,69 @@
               border-top: 1px solid rgba(0, 0, 0, 0.14);
               border-bottom: 1px solid rgba(0, 0, 0, 0.14);
               background: #fff;
+              padding-top: 14px !important;
+              padding-bottom: 14px !important;
+            }
+            .publications-table tr[data-tags] > td:last-child > p {
+              margin-top: 6px;
+              margin-bottom: 0;
+            }
+            .publications-table tr[data-tags] > td:last-child > p:empty {
+              display: none;
             }
             .publications-table tr[data-tags] > td:first-child {
               border-left: 1px solid rgba(0, 0, 0, 0.14);
               border-radius: 8px 0 0 8px;
+              position: relative;
+            }
+            .publications-table tr[data-tags] > td:first-child > .one,
+            .publications-table tr[data-tags] > td:first-child > .publication-wide-figure {
+              margin-top: 10px;
+            }
+            .venue-badge {
+              display: inline-block;
+              padding: 4px 9px;
+              border: 1px solid rgba(0, 0, 0, 0.14);
+              border-radius: 999px;
+              background: rgba(255, 255, 255, 0.94);
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+              color: #444;
+              font-size: 12px;
+              font-style: italic;
+              font-weight: 700;
+              line-height: 1.2;
+              white-space: nowrap;
+            }
+            .venue-badge.accepted {
+              color: #c62828;
+            }
+            .publication-badges {
+              position: absolute;
+              top: 10px;
+              left: 10px;
+              z-index: 4;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              gap: 6px;
+            }
+            .publication-badges a {
+              display: block;
+              line-height: 0;
+            }
+            .publications-table img[alt="GitHub Repo stars"] {
+              display: block;
+              height: 20px;
+              margin: 0;
+              border: 1px solid rgba(0, 0, 0, 0.14);
+              border-radius: 6px;
+              background: #fff;
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
             }
             .publications-table tr[data-tags] > td:last-child {
               border-right: 1px solid rgba(0, 0, 0, 0.14);
               border-radius: 0 8px 8px 0;
+              padding-left: 4px !important;
             }
             .publications-table tr[data-tags][style*="lightyellow"] > td {
               background: lightyellow;
@@ -452,13 +507,14 @@
 
 	          <tr style="background-color: lightyellow;" data-tags="multimodal-gen,medical">
 	            <td style="padding:20px;width:30%;vertical-align:middle">
+	              <div class="publication-badges">
+	                <span class="venue-badge accepted">NeurIPS 2026 (Poster)</span>
+	                <a href="https://github.com/FreedomIntelligence/MedIGen" target="_blank" rel="noopener" aria-label="View GitHub repository">
+	                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/MedIGen?style=flat&color=ffffff&labelColor=f2f2f2&label=Stars&logo=github&logoColor=181717">
+	                </a>
+	              </div>
 	              <div class="publication-wide-figure">
 	                <img src="images/paper/medigen.png" alt="MedIGen generate-reflect-refine framework and IlluGenBench evaluation pipeline">
-	              </div>
-	              <div style="margin-top:8px; text-align:center;">
-	                <a href="https://github.com/FreedomIntelligence/MedIGen" target="_blank" rel="noopener">
-	                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/MedIGen?style=flat-square&color=yellow&label=stars&logo=GitHub">
-	                </a>
 	              </div>
 	            </td>
 	            <td style="padding:20px;width:70%;vertical-align:middle">
@@ -483,7 +539,6 @@
 	              /
               <a href="https://huggingface.co/datasets/FreedomIntelligence/IlluGenBench" target="_blank" rel="noopener">Benchmark</a>
 	              <br>
-	              <span style="color: red;"><em><strong>NeurIPS 2026 (Poster)</strong></em></span>
 	              <p></p>
 	              <p>Medical illustrations support education, clinical communication, and scientific publishing, and MedIGen makes their generation more reliable through interleaved generate-reflect-refine reasoning.</p>
 	            </td>
@@ -491,6 +546,12 @@
 
 	          <tr data-tags="medical">
 	            <td style="padding:20px;width:30%;vertical-align:middle">
+	              <div class="publication-badges">
+	                <span class="venue-badge">Preprint</span>
+	                <a href="https://github.com/geteff1/RareLens" target="_blank" rel="noopener" aria-label="View GitHub repository">
+	                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/geteff1/RareLens?style=flat&color=ffffff&labelColor=f2f2f2&label=Stars&logo=github&logoColor=181717">
+	                </a>
+	              </div>
 	              <div class="one">
 	                <div class="two" id="rarelens_image">
 	                  <br>
@@ -498,7 +559,6 @@
 	                </div>
 	                <br>
 	                <img src="images/paper/rarelens.png" width="190" alt="RareLens clinical workflow">
-	                <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/geteff1/RareLens?style=flat-square&color=yellow&label=stars&logo=GitHub">
 	              </div>
 	              <script type="text/javascript">
 	                function rarelens_start() {
@@ -551,7 +611,6 @@
 				  /
               	  <a href="https://arxiv.org/abs/2607.23290">Paper</a>
 	              <br>
-	              <em><strong>Preprint</strong></em>
 	              <p></p>
 	              <p>
 	              RareLens provides trustworthy, actionable decision support across the full rare-disease care pathway, from early risk screening and diagnosis to treatment, efficacy evaluation, and prognosis.
@@ -560,13 +619,18 @@
 
 	          <tr data-tags="benchmark">
             <td style="padding:20px;width:30%;vertical-align:middle">
+              <div class="publication-badges">
+                <span class="venue-badge">Preprint</span>
+                <a href="https://github.com/FreedomIntelligence/gamecraft-bench" target="_blank" rel="noopener" aria-label="View GitHub repository">
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/gamecraft-bench?style=flat&color=ffffff&labelColor=f2f2f2&label=Stars&logo=github&logoColor=181717">
+                </a>
+              </div>
               <div class="one">
                 <div class="two" id='gamecraft_image'>
                   <br>
                   <img src='images/paper/gamecraft-bench.png' width="190"></div>
                   <br>
                   <img src='images/paper/gamecraft-bench.png' width="190">
-                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/gamecraft-bench?style=flat-square&color=yellow&label=stars&logo=GitHub">
                 </div>
               <script type="text/javascript">
                 function gamecraft_start() {
@@ -611,22 +675,30 @@
               <br>
               <a href="https://tongxuluo.github.io/gamecraft-bench-website/">Homepage</a>&nbsp;/&nbsp;<a href="https://github.com/FreedomIntelligence/gamecraft-bench">Code</a>&nbsp;/&nbsp;<a href="https://arxiv.org/abs/2606.17861">Paper</a>
               <br>
-              <em><strong>Preprint</strong></em>
               <p></p>
               <p>
               GameCraft-Bench evaluates whether agents can build playable games end-to-end in a real game engine.
+              <blockquote style="margin:10px 0 0; padding:9px 13px; background:#fff8e1; border-left:4px solid #f4b400; color:#555; font-size:0.95em;">
+                This work was featured by <a href="https://mp.weixin.qq.com/s/Y2OQ0o_3jx0yMrcJtw7oeQ" target="_blank" rel="noopener noreferrer">AI科技评论</a>!
+                The benchmark has also been adopted in subsequent research and evaluation efforts from <a href="https://arxiv.org/abs/2609.01481" target="_blank" rel="noopener noreferrer">Shanghai AI Lab</a>, <a href="https://arxiv.org/pdf/2610.08621" target="_blank" rel="noopener noreferrer">HKU MMLab</a>, <a href="https://arxiv.org/pdf/2609.39045" target="_blank" rel="noopener noreferrer">UCSD</a>, and <a href="https://www.seeles.ai/benchmarks/gamecraft-bench-seele02" target="_blank" rel="noopener noreferrer">SEELE02</a>.
+              </blockquote>
               </td>
           </tr>
 
 		<tr style="background-color: lightyellow;" data-tags="world-model">
             <td style="padding:20px;width:30%;vertical-align:middle">
+              <div class="publication-badges">
+                <span class="venue-badge accepted">ICLR 2026 (Poster)</span>
+                <a href="https://github.com/FreedomIntelligence/MicroVerse" target="_blank" rel="noopener" aria-label="View GitHub repository">
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/MicroVerse?style=flat&color=ffffff&labelColor=f2f2f2&label=Stars&logo=github&logoColor=181717">
+                </a>
+              </div>
               <div class="one">
                 <div class="two" id='malle_image'>
                   <br>
                   <img src='images/paper/microverse.png' width="160"></div>
                   <br>
                   <img src='images/paper/microverse.png' width="160">
-                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/MicroVerse?style=flat-square&color=yellow&label=stars&logo=GitHub">
                 </div>
               <script type="text/javascript">
                 function malle_start() {
@@ -661,22 +733,29 @@
 			  /
               <a href="https://huggingface.co/datasets/FreedomIntelligence/">Benchmark</a> -->
               <br>
-			  <span style="color: red;"><em><strong>ICLR 2026 (Poster)</strong></em></span>
               <p></p>
               <p>
               MicroVerse is a world model designed to faithfully simulate biological processes at the microscale.
+              <blockquote style="margin:10px 0 0; padding:9px 13px; background:#fff8e1; border-left:4px solid #f4b400; color:#555; font-size:0.95em;">
+                This work was featured by <a href="https://mp.weixin.qq.com/s/smb-4ejWzdowQMSa4WLXBw" target="_blank" rel="noopener noreferrer">机器之心</a>!
+              </blockquote>
               </td>
           </tr>
                     
 	          <tr style="background-color: lightyellow;" data-tags="multimodal-gen,medical">
             <td style="padding:20px;width:30%;vertical-align:middle">
+              <div class="publication-badges">
+                <span class="venue-badge">Preprint</span>
+                <a href="https://github.com/FreedomIntelligence/MedGen" target="_blank" rel="noopener" aria-label="View GitHub repository">
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/MedGen?style=flat&color=ffffff&labelColor=f2f2f2&label=Stars&logo=github&logoColor=181717">
+                </a>
+              </div>
               <div class="one">
                 <div class="two" id='malle_image'>
                   <br>
                   <img src='images/paper/medgen.png' width="160"></div>
                   <br>
                   <img src='images/paper/medgen.png' width="160">
-                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/MedGen?style=flat-square&color=yellow&label=stars&logo=GitHub">
                 </div>
               <script type="text/javascript">
                 function malle_start() {
@@ -708,7 +787,6 @@
 			  /
               <a href="https://huggingface.co/FreedomIntelligence/MedGen-14B">Model</a>
               <br>
-              <em><strong>Preprint</strong></em>
               <p></p>
               <p>
               MedGen is a medical video generation model, built on the large-scale, caption-rich MedVideoCap-55K dataset.
@@ -717,13 +795,18 @@
 
 	          <tr data-tags="mllm,medical">
             <td style="padding:20px;width:30%;vertical-align:middle">
+              <div class="publication-badges">
+                <span class="venue-badge accepted">ACL 2025 (Main)</span>
+                <a href="https://github.com/FreedomIntelligence/Med-MAT" target="_blank" rel="noopener" aria-label="View GitHub repository">
+                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/Med-MAT?style=flat&color=ffffff&labelColor=f2f2f2&label=Stars&logo=github&logoColor=181717">
+                </a>
+              </div>
               <div class="one">
                 <div class="two" id='malle_image'>
                   <br>
                   <img src='images/paper/med-mat.png' width="190"></div>
                   <br>
                   <img src='images/paper/med-mat.png' width="190">
-                  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/FreedomIntelligence/Med-MAT?style=flat-square&color=yellow&label=stars&logo=GitHub">
                 </div>
               <script type="text/javascript">
                 function malle_start() {
@@ -756,7 +839,6 @@
               /
               <a href="https://huggingface.co/datasets/FreedomIntelligence/Med-MAT">Dataset</a>
               <br>
-              <span style="color: red;"><em><strong>ACL 2025 (Main)</strong></em></span>
               <p></p>
               <p>
               Multimodal LLMs achieve strong generalization in medical imaging largely through compositional generalization (CG).

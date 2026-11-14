@@ -475,10 +475,22 @@ heading {
   margin-bottom: 24px;
 }
 .news-highlight {
-  text-decoration: underline;
-  text-decoration-style: solid;
-  -webkit-text-decoration-color: #ad7020;
-  text-decoration-color: #fba524;
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none !important;
+  background: linear-gradient(
+    to bottom,
+    transparent 58%,
+    rgba(251, 165, 36, 0.28) 58%,
+    rgba(243, 208, 8, 0.28) 90%,
+    transparent 90%
+  );
+  padding: 0 2px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 .news-text {
   font-size: 14px;
